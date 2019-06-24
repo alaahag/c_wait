@@ -11,11 +11,11 @@ Features:
 * Custom messages (easily editable from global values below).
 * Simple, user-friendly and easy to use.
 
-# Methods test-order (you can change the methods order here, or if you want to disable/enable some methods):
+Methods test-order (you can change the methods order here, or if you want to disable/enable some methods):
 METHODS="nc ncat python python3 bash curl wget telnet socat nmap node perl ruby php scala gcc g++ tclsh javac elixirc go"
-# Note: telnet & wget (the BusyBox versions only) are not supported!
+Note: telnet & wget (the BusyBox versions only) are not supported!
 
-# Default global values:
+Default global values:
 HOSTS="db:3306 db2:5432 0.0.0.0" # IPs/Hostnames.   example: db:3306,db2:5432,0.0.0.0,google.com
 SLEEP_TIME="3" # Delay (seconds) after each set of failed connections. default is '3' second(s)
 CONNECT_TYPE="all" # Options: 'all'/'any'      'all': will pass if all selected hosts are connected        'any': will pass if any of the selected hosts are connected
