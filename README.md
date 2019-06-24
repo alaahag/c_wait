@@ -38,9 +38,8 @@ Default global values:
 <b>SLEEP_TIME</b>="3"  
 <b>CONNECT_TYPE</b>="all"  
 
-For more help, read the source-code comments.
+For more help, read the source-code comments.  
 ./c_wait --help
-
     "--------------------------------------------------------------------------"
     "-=-                   'c_wait' - ConnectionWait v1.0                   -=-"
     "--------------------------------------------------------------------------"
