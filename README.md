@@ -16,8 +16,8 @@ Python
 Python3  
 Bash  
 cURL  
-Wget  
-Telnet  
+Wget (BusyBox version is not supported)  
+Telnet (BusyBox version is not supported)  
 Socat  
 Nmap  
 NodeJS  
@@ -31,7 +31,6 @@ TCL
 JavaJDK  
 Elixir  
 GOLang</b>  
-(Note: telnet & wget (the BusyBox versions only) are not supported!)
 
 Default global values:  
 HOSTS="db:3306 db2:5432 0.0.0.0"  
