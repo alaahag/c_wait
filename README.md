@@ -5,32 +5,32 @@ Features:
 * Supporting lots of test-methods (to check for open-connection).
 * You can choose to run by app using args or by the default values.
 * You can add unlimited number of hosts.
-* Allow connection-conditions ('all' hosts must be connected to complete the task, or 'any' of them).
+* Allow connection-conditions ('<u>all</u>' hosts must be connected to complete the task, or '<u>any</u>' of them).
 * Custom messages (easily editable from global values below).
 * Simple, user-friendly and easy to use.
 
 Methods tests-order:  
-<b>Netcat  
-Ncat  
-Python  
-Python3  
-Bash  
-cURL  
-Wget (BusyBox version is not supported)  
-Telnet (BusyBox version is not supported)  
-Socat  
-Nmap  
-NodeJS  
-Perl  
-Ruby  
-PHP  
-Scala  
-GCC  
-G++  
-TCL  
-JavaJDK  
-Elixir  
-GOLang</b>  
+<b>Netcat</b>  
+<b>Ncat</b>  
+<b>Python</b>  
+<b>Python3</b>  
+<b>Bash</b>  
+<b>cURL</b>  
+<b>Wget</b> (BusyBox version is not supported)  
+<b>Telnet</b> (BusyBox version is not supported)  
+<b>Socat</b>  
+<b>Nmap</b>  
+<b>NodeJS</b>  
+<b>Perl</b>  
+<b>Ruby</b>  
+<b>PHP</b>  
+<b>Scala</b>  
+<b>GCC</b>  
+<b>G++</b>  
+<b>TCL</b>  
+<b>JavaJDK</b>  
+<b>Elixir</b>  
+<b>GOLang</b>  
 
 Default global values:  
 HOSTS="db:3306 db2:5432 0.0.0.0"  
