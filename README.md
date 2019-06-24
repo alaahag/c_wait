@@ -6,7 +6,7 @@ Features:
 * You can choose to run app using args or by the default values.
 * You can add unlimited number of hosts.
 * Allow connection-conditions ('<b>all</b>' hosts must be connected to complete the task, or '<b>any</b>' of them).
-* Custom messages (easily editable from global values below).
+* Custom messages (easily editable from global values).
 * Simple, user-friendly and easy to use.
 
 * Methods tests-order:  
