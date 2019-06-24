@@ -16,7 +16,7 @@ Features:
 <b>Python3</b>  
 <b>Bash</b>  
 <b>cURL</b>  
-<b>Wget</b>   (BusyBox version is not supported)  
+<b>Wget</b>    (BusyBox version is not supported)  
 <b>Telnet</b> (BusyBox version is not supported)  
 <b>Socat</b>  
 <b>Nmap</b>  
