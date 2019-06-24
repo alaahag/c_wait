@@ -1,11 +1,11 @@
-# 'c_wait' ConnectionWait v1.0
+# 'c_wait' - ConnectionWait v1.0
 
 Features:
 * Optimized for Docker images (including full support for the most popular docker-OS-images: Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE).
 * Supporting lots of test-methods (to check for open-connection).
 * You can choose to run by app using args or by the default values.
 * You can add unlimited number of hosts.
-* Allow connection-conditions ('all' hosts must be connected to complete the task, or 'ány' of them).
+* Allow connection-conditions ('all' hosts must be connected to complete the task, or 'any' of them).
 * Custom messages (easily editable from global values below).
 * Simple, user-friendly and easy to use.
 
