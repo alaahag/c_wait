@@ -9,15 +9,14 @@ Features:
 * Custom messages (easily editable from global values below).
 * Simple, user-friendly and easy to use.
 
-Methods test-order:
-nc ncat python python3 bash curl wget telnet socat nmap node perl ruby php scala gcc g++ tclsh javac elixirc go
+Methods tests-order:  
+nc ncat python python3 bash curl wget telnet socat nmap node perl ruby php scala gcc g++ tclsh javac elixirc go  
+(Note: telnet & wget (the BusyBox versions only) are not supported!)
 
-Note: telnet & wget (the BusyBox versions only) are not supported!
-
-Default global values:
-HOSTS="db:3306 db2:5432 0.0.0.0"
-SLEEP_TIME="3"
-CONNECT_TYPE="all"
+Default global values:  
+HOSTS="db:3306 db2:5432 0.0.0.0"  
+SLEEP_TIME="3"  
+CONNECT_TYPE="all"  
 
 For help, type:
 ./c_wait.sh /?
