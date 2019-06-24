@@ -5,9 +5,7 @@ Features:
 * Supporting lots of test-methods (to check for open-connection).
 * You can choose to run by app using args or by the default values.
 * You can add unlimited number of hosts.
-* Allow connection-conditions
-    (1. 'all' hosts must be connected to complete the task.
-    (2. 'any' of the hosts must be connected to complete the task.
+* Allow connection-conditions ('all' hosts must be connected to complete the task, or 'ány' of them).
 * Custom messages (easily editable from global values below).
 * Simple, user-friendly and easy to use.
 
