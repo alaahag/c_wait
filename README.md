@@ -1,7 +1,7 @@
 # 'c_wait' - ConnectionWait v1.0
 
 Features:
-* Optimized for Docker images (including full support for the most popular docker-OS-images: Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE).
+* Optimized for Docker images (including full support for the most popular docker-OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).
 * Supporting lots of test-methods (to check for open-connection).
 * You can choose to run by app using args or by the default values.
 * You can add unlimited number of hosts.
@@ -10,7 +10,27 @@ Features:
 * Simple, user-friendly and easy to use.
 
 Methods tests-order:  
-<b>Netcat, Ncat, Python, Python3, Bash, cURL, Wget, Telnet, Socat, Nmap, NodeJS, Perl, Ruby, PHP, Scala, GCC, g++, TCL, JavaJDK,  Elixir, GOLang</b>  
+<b>Netcat
+Ncat
+Python
+Python3
+Bash
+cURL
+Wget
+Telnet
+Socat
+Nmap
+NodeJS
+Perl
+Ruby
+PHP
+Scala
+GCC
+G++
+TCL
+JavaJDK
+Elixir
+GOLang</b>  
 (Note: telnet & wget (the BusyBox versions only) are not supported!)
 
 Default global values:  
