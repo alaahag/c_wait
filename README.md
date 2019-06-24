@@ -33,7 +33,7 @@ Features:
 <b>GOLang</b>  
 
 --------------------
-Default global values:  
+<b>Default global values:</b>  
 <b>HOSTS</b>="db:3306 db2:5432 0.0.0.0"  
 <b>SLEEP_TIME</b>="3"  
 <b>CONNECT_TYPE</b>="all"  
