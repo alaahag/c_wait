@@ -2,8 +2,8 @@
 
 Features:
 * Optimized for Docker images (including full support for the most popular docker-OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).
-* Supporting lots of test-methods (to check for open-connection).
-* You can choose to run by app using args or by the default values.
+* Supporting lots of check-methods (to check for open-connection).
+* You can choose to run app using args or by the default values.
 * You can add unlimited number of hosts.
 * Allow connection-conditions ('<b>all</b>' hosts must be connected to complete the task, or '<b>any</b>' of them).
 * Custom messages (easily editable from global values below).
