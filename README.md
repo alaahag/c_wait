@@ -11,7 +11,28 @@ Features:
 * Custom messages (easily editable from global values below).
 * Simple, user-friendly and easy to use.
 
-For help:
-c_wait /?
+For help, type:
+./c_wait.sh /?
 
-Contact me at: alaahag@gmail.com
+    "--------------------------------------------------------------------------"
+    "-=-                   'c_wait' - ConnectionWait v1.0                   -=-"
+    "--------------------------------------------------------------------------"
+     "Usage:    $0 --connect <all/any> --sleep <seconds> <hosts:ports>"
+     
+     "Examples:"
+     "          $0 192.168.1.1:22"
+     "          $0 -s 10 myserver:8000"
+     "          $0 -c any localhost mydb1:5432 mydb2:3306 myftp:21"
+     "          $0 --connect all -sleep 5 google.com 0.0.0.0:443"
+     
+     "Default options:"
+     "          Hosts:              '$HOSTS'"
+     "          -c|--connect        '$CONNECT_TYPE' of the selected host(s)"
+     "          -s|--sleep          '$SLEEP_TIME' second(s)"
+    
+
+
+(Don't forget to chmod +x c_wait.sh before running it) ;)
+
+
+Contact me for anything: alaahag@gmail.com
