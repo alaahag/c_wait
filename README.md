@@ -9,7 +9,7 @@ Features:
 * Custom messages (easily editable from global values below).
 * Simple, user-friendly and easy to use.
 
-Methods tests-order:  
+* Methods tests-order:  
 <b>Netcat</b>  
 <b>Ncat</b>  
 <b>Python</b>  
