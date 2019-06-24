@@ -5,7 +5,7 @@ Features:
 * Supporting lots of test-methods (to check for open-connection).
 * You can choose to run by app using args or by the default values.
 * You can add unlimited number of hosts.
-* Allow connection-conditions ('<u>all</u>' hosts must be connected to complete the task, or '<u>any</u>' of them).
+* Allow connection-conditions ('<b>all</b>' hosts must be connected to complete the task, or '<b>any</b>' of them).
 * Custom messages (easily editable from global values below).
 * Simple, user-friendly and easy to use.
 
@@ -16,7 +16,7 @@ Methods tests-order:
 <b>Python3</b>  
 <b>Bash</b>  
 <b>cURL</b>  
-<b>Wget</b> (BusyBox version is not supported)  
+<b>Wget</b>   (BusyBox version is not supported)  
 <b>Telnet</b> (BusyBox version is not supported)  
 <b>Socat</b>  
 <b>Nmap</b>  
