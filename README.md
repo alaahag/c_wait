@@ -39,7 +39,8 @@ Default global values:
 <b>CONNECT_TYPE</b>="all"  
 
 For more help, read the source-code comments.  
-./c_wait --help
+./c_wait --help  
+
     "--------------------------------------------------------------------------"
     "-=-                   'c_wait' - ConnectionWait v1.0                   -=-"
     "--------------------------------------------------------------------------"
