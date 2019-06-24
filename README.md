@@ -10,7 +10,7 @@ Features:
 * Simple, user-friendly and easy to use.
 
 Methods tests-order:  
-nc ncat python python3 bash curl wget telnet socat nmap node perl ruby php scala gcc g++ tclsh javac elixirc go  
+<b>Netcat, Ncat, Python, Python3, Bash, cURL, Wget, Telnet, Socat, Nmap, NodeJS, Perl, Ruby, PHP, Scala, GCC, g++, TCL, JavaJDK,  Elixir, GOLang</b>  
 (Note: telnet & wget (the BusyBox versions only) are not supported!)
 
 Default global values:  
