@@ -32,13 +32,14 @@ Methods tests-order:
 <b>Elixir</b>  
 <b>GOLang</b>  
 
+--------------------
 Default global values:  
-HOSTS="db:3306 db2:5432 0.0.0.0"  
-SLEEP_TIME="3"  
-CONNECT_TYPE="all"  
+<b>HOSTS</b>="db:3306 db2:5432 0.0.0.0"  
+<b>SLEEP_TIME</b>="3"  
+<b>CONNECT_TYPE</b>="all"  
 
-For help, type:
-./c_wait.sh /?
+For more help, read the source-code comments.
+./c_wait --help
 
     "--------------------------------------------------------------------------"
     "-=-                   'c_wait' - ConnectionWait v1.0                   -=-"
