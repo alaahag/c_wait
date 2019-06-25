@@ -67,6 +67,7 @@ Let's say that you want to initialize a server + db with Docker, but you don't w
                 -c|--connect        'all' of the selected host(s)
                 -s|--sleep          '3' second(s)
     
+--------------------
 <b>Example using Docker:</b>  
 cat docker-compose.yml:  
 ```
@@ -101,9 +102,7 @@ cat entrypoint_django_run.sh
 ./c_wait.sh db:5432  
 python3 manage.py runserver 0.0.0.0:8000  
 ```
+--------------------
 <br>
-<br>
-<br>
-
 Contact me for anything: alaahag@gmail.com  
 [DevOps, Automation & PT engineer, Looking for my next challenge]
