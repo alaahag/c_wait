@@ -112,4 +112,4 @@ For more help, read the source-code comments.
 <br>
 
 Contact me for anything: alaahag@gmail.com  
-[DevOps, Automation & PT enginner, Looking for my next challenge]
+[DevOps, Automation & PT engineer, Looking for my next challenge]
