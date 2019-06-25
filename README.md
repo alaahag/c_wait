@@ -1,14 +1,14 @@
 # 'c_wait' - ConnectionWait v1.0
 
-<b>Intro:</b>  
+<h3>Intro:</h3>  
 'c_wait' is a DevOps tool, the script will keep running and checking for open-connections for X hosts.  
 When the task is complete: the script will exit successfully (exit 0).
 
-<b>Where can I use this script?</b>  
+<h3>Where can I use this script?</h3>  
 Let's say that you want to initialize a server + db with Docker, but you don't want to let the server run without a db-connection up (or else it will fail on initialization).  
 
 --------------------
-<b>Features:</b>  
+<h3>Features:</h3>  
 * Optimized for Docker images (including full support for the most popular docker-OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).  
 * Supporting lots of check-methods (to check for open-connection).  
 * You can choose to run app using args or by the default values.  
@@ -42,7 +42,7 @@ Let's say that you want to initialize a server + db with Docker, but you don't w
 
 --------------------
 
-<b>Default global values:</b>  
+<h3>Default global values:</h3>  
 ```
 <b>HOSTS</b>="db:3306 db2:5432 0.0.0.0"  
 <b>SLEEP_TIME</b>="3"  
@@ -68,7 +68,7 @@ Let's say that you want to initialize a server + db with Docker, but you don't w
                 -s|--sleep          '3' second(s)
     
 --------------------
-<b>Example using Docker:</b>  
+<h3>Example using Docker:</h3>  
 cat docker-compose.yml:  
 ```
 services:  
