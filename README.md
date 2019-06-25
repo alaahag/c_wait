@@ -6,13 +6,13 @@
 When the task is complete: the script will exit successfully (exit 0).
 
 <h3>Where can I use this script?</h3>  
-Let's say that you want to initialize a server + db with Docker, but you don't want to let the server run without a db-connection up (or else it will fail on initialization).  
+Let's say that you want to initialize a server + db with Kubernetes or Docker, but you don't want to let the server run without a db-connection up (or else it will fail on initialization).  
 
 --------------------
 
 <h3>Features:</h3>  
 
-* Optimized for Docker images (including full support for the most popular docker-OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).  
+* Optimized for Kubernetes and Docker images (including full support for the most popular docker-OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).  
 * Supporting lots of check-methods (to check for open-connection).  
 * You can choose to run app using args or by the default values.  
 * You can add unlimited number of hosts.  
@@ -76,7 +76,7 @@ You can modify the default values (read the source-code comments).
 --------------------
 
 <h3>Example using Docker:</h3>  
-cat docker-compose.yml:  
+<h6>cat docker-compose.yml:</h6>  
 
 ```
 services:  
@@ -106,7 +106,7 @@ networks:
   shared:    
 ```
 
-cat entrypoint_django_run.sh  
+<h6>cat entrypoint_django_run.sh</h6>  
 
 ```
 ./c_wait.sh db:5432  
