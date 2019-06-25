@@ -7,7 +7,7 @@ When the task is complete: the script will exit successfully (exit 0).
 If the script fails to run or fails to identify any method for test-connections: it will exit with failure (exit 1).  
 
 <h3>Where can I use this script?</h3>  
-Let's say that you want to initialize a server + db with Kubernetes or Docker, but you don't want to let the server run without a db-connection up (or else it will fail on initialization).  
+When you need to initialize a server + db (with Kubernetes or Docker), but you can't let the server run without a db-connection up first (or else it will fail on initialization and your server will not run properly).  
 
 --------------------
 
