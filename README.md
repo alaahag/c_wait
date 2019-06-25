@@ -48,9 +48,9 @@ Let's say that you want to initialize a server + db with Docker, but you don't w
 <h3>Default global values:</h3>  
 
 ```
-<b>HOSTS</b>="db:3306 db2:5432 0.0.0.0"  
-<b>SLEEP_TIME</b>="3"  
-<b>CONNECT_TYPE</b>="all"  
+HOSTS="db:3306 db2:5432 0.0.0.0"  
+SLEEP_TIME="3"  
+CONNECT_TYPE="all"  
 ```
 
 (For more help, read the source-code comments, or just run ./c_wait --help)  
