@@ -83,9 +83,7 @@ python3 manage.py runserver 0.0.0.0:8000
 <b>CONNECT_TYPE</b>="all"  
 ```
 
-(For more help, read the source-code comments)  
-<br>
-./c_wait --help  
+(For more help, read the source-code comments, or just run ./c_wait --help)  
 
      --------------------------------------------------------------------------
      -=-                   'c_wait' - ConnectionWait v1.0                   -=-
