@@ -75,6 +75,7 @@ Let's say that you want to initialize a server + db with Docker, but you don't w
 
 <h3>Example using Docker:</h3>  
 cat docker-compose.yml:  
+
 ```
 services:  
   db:  
@@ -102,7 +103,9 @@ services:
 networks:  
   shared:    
 ```
+
 cat entrypoint_django_run.sh  
+
 ```
 ./c_wait.sh db:5432  
 python3 manage.py runserver 0.0.0.0:8000  
