@@ -104,9 +104,6 @@ For more help, read the source-code comments.
                 -s|--sleep          '3' second(s)
     
 
-
-(Don't forget to chmod +x c_wait.sh before running it) ;)
-
 <br>
 <br>
 <br>
