@@ -7,7 +7,7 @@ When the task is complete: the script will exit successfully (exit 0).
 <b>Where can I use this script?</b>  
 Let's say that you want to initialize a server + db with Docker, but you don't want to let the server run without a db-connection (or else it will fail).  
 
-<b>Example, using Docker entrypoint:</b>  
+<b>Example with Docker:</b>  
 cat docker-compose.yml:  
 ```
 services:  
@@ -42,7 +42,7 @@ cat entrypoint_django_run.sh
 python3 manage.py runserver 0.0.0.0:8000  
 ```
 --------------------
-Features:
+<b>Features:</b>  
 * Optimized for Docker images (including full support for the most popular docker-OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).  
 * Supporting lots of check-methods (to check for open-connection).  
 * You can choose to run app using args or by the default values.  
@@ -107,7 +107,9 @@ For more help, read the source-code comments.
 
 (Don't forget to chmod +x c_wait.sh before running it) ;)
 
-
+<br>
+<br>
+<br>
 
 Contact me for anything: alaahag@gmail.com  
-[a DevOps engineer, looking for my next challenge]
+[DevOps, Automation & PT enginner, Looking for my next challenge]
