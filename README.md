@@ -7,40 +7,6 @@ When the task is complete: the script will exit successfully (exit 0).
 <b>Where can I use this script?</b>  
 Let's say that you want to initialize a server + db with Docker, but you don't want to let the server run without a db-connection up (or else it will fail on initialization).  
 
-<b>Example using Docker:</b>  
-cat docker-compose.yml:  
-```
-services:  
-  db:  
-    image: postgres  
-    container_name: db  
-    ..........  
-    ..........  
-    expose:  
-      - '5432'
-    networks:  
-      - shared  
-    ..........  
-    ..........  
-
-  django_app:  
-    build: .  
-    ..........  
-    ..........  
-    entrypoint: /var/www/my_app/entrypoint_django_run.sh  
-    networks:  
-      - shared  
-    ..........  
-    ..........  
-
-networks:  
-  shared:    
-```
-cat entrypoint_django_run.sh  
-```
-./c_wait.sh db:5432  
-python3 manage.py runserver 0.0.0.0:8000  
-```
 --------------------
 <b>Features:</b>  
 * Optimized for Docker images (including full support for the most popular docker-OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).  
@@ -101,7 +67,40 @@ python3 manage.py runserver 0.0.0.0:8000
                 -c|--connect        'all' of the selected host(s)
                 -s|--sleep          '3' second(s)
     
+<b>Example using Docker:</b>  
+cat docker-compose.yml:  
+```
+services:  
+  db:  
+    image: postgres  
+    container_name: db  
+    ..........  
+    ..........  
+    expose:  
+      - '5432'
+    networks:  
+      - shared  
+    ..........  
+    ..........  
 
+  django_app:  
+    build: .  
+    ..........  
+    ..........  
+    entrypoint: /var/www/my_app/entrypoint_django_run.sh  
+    networks:  
+      - shared  
+    ..........  
+    ..........  
+
+networks:  
+  shared:    
+```
+cat entrypoint_django_run.sh  
+```
+./c_wait.sh db:5432  
+python3 manage.py runserver 0.0.0.0:8000  
+```
 <br>
 <br>
 <br>
