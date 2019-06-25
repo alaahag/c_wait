@@ -1,13 +1,55 @@
 # 'c_wait' - ConnectionWait v1.0
 
+<b>Intro:</b>  
+'c_wait' is a DevOps tool, the script will keep running and checking for open-connections for X hosts.
+When the task is complete: the script will exit successfully (exit 0).
+
+<b>Where can I use this script?</b>  
+Let's say that you want to initialize a server + db with Docker, but you don't want to let the server run without a db-connection (or else it will fail).  
+
+<b>Example, using Docker entrypoint:</b>  
+cat docker-compose.yml:  
+```
+services:  
+  db:  
+    image: postgres  
+    container_name: db  
+    ..........  
+    ..........  
+    expose:  
+      - '5432'
+    networks:  
+      - shared  
+    ..........  
+    ..........  
+
+  django_app:  
+    build: .  
+    ..........  
+    ..........  
+    entrypoint: /var/www/my_app/entrypoint_django_run.sh  
+    networks:  
+      - shared  
+    ..........  
+    ..........  
+
+networks:  
+  shared:    
+```
+cat entrypoint_django_run.sh  
+```
+./c_wait.sh db:5432  
+python3 manage.py runserver 0.0.0.0:8000  
+```
+--------------------
 Features:
-* Optimized for Docker images (including full support for the most popular docker-OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).
-* Supporting lots of check-methods (to check for open-connection).
-* You can choose to run app using args or by the default values.
-* You can add unlimited number of hosts.
-* Allow connection-conditions ('<b>all</b>' hosts must be connected to complete the task, or '<b>any</b>' of them).
-* Custom messages (easily editable from global values).
-* Simple, user-friendly and easy to use.
+* Optimized for Docker images (including full support for the most popular docker-OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).  
+* Supporting lots of check-methods (to check for open-connection).  
+* You can choose to run app using args or by the default values.  
+* You can add unlimited number of hosts.  
+* Allow connection-conditions ('<b>all</b>' hosts must be connected to complete the task, or '<b>any</b>' of them).  
+* Custom messages (easily editable from global values).  
+* Simple, user-friendly and easy to use.  
 
 * Methods tests-order:  
 <b>Netcat</b>  
@@ -33,12 +75,16 @@ Features:
 <b>GOLang</b>  
 
 --------------------
+
 <b>Default global values:</b>  
+```
 <b>HOSTS</b>="db:3306 db2:5432 0.0.0.0"  
 <b>SLEEP_TIME</b>="3"  
 <b>CONNECT_TYPE</b>="all"  
+```
 
 For more help, read the source-code comments.  
+
 ./c_wait --help  
 
     "--------------------------------------------------------------------------"
@@ -62,4 +108,6 @@ For more help, read the source-code comments.
 (Don't forget to chmod +x c_wait.sh before running it) ;)
 
 
-Contact me for anything: alaahag@gmail.com [DevOps LF my next challenge]
+
+Contact me for anything: alaahag@gmail.com  
+[a DevOps engineer, looking for my next challenge]
