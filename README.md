@@ -115,5 +115,5 @@ python3 manage.py runserver 0.0.0.0:8000
 
 --------------------
 
-Contact me for anything: alaahag@gmail.com  
-[DevOps, Automation & PT engineer, Looking for my next challenge].
+<h5>Contact me for anything: alaahag@gmail.com</5>  
+<h5>[DevOps, Automation & PT engineer, Looking for my next challenge].</h5>
