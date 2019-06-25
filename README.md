@@ -2,7 +2,7 @@
 
 <h3>Intro:</h3>  
 
-'c_wait' is a DevOps and PT tool, the script will keep running and checking for open-connections for X hosts:ports.  
+'c_wait' is a DevOps and PT tool, the script will keep running and checking for open-connections for X hosts/ports.  
 When the task is complete: the script will exit successfully (exit 0).  
 If the script fails to run or fails to identify any method for test-connections: it will exit with failure (exit 1).  
 
