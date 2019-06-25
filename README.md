@@ -2,9 +2,9 @@
 
 <h3>Intro:</h3>  
 
-<h4>'c_wait' is a DevOps and PT tool, the script will keep running and checking for open-connections for X hosts/ports.</h4>  
-<h4>When the task is complete: the script will exit successfully (exit 0).</h4>  
-<h4>If the script fails to run or fails to identify any method for test-connections: it will exit with failure (exit 1).</h4>  
+<h4>'c_wait' is a DevOps and PT tool, the script will keep running and checking for open-connections for X hosts/ports.  
+When the task is complete: the script will exit successfully (exit 0).  
+If the script fails to run or fails to identify any method for test-connections: it will exit with failure (exit 1).</h4>  
 
 <h3>Where can I use this script?</h3>  
 <h4>When you need to initialize a server + db (with Kubernetes or Docker), but you can't let the server run without a db-connection up first (or else it will fail on initialization and your server will not run properly).</h4>  
