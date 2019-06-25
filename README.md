@@ -5,9 +5,9 @@
 When the task is complete: the script will exit successfully (exit 0).
 
 <b>Where can I use this script?</b>  
-Let's say that you want to initialize a server + db with Docker, but you don't want to let the server run without a db-connection (or else it will fail).  
+Let's say that you want to initialize a server + db with Docker, but you don't want to let the server run without a db-connection up (or else it will fail on initialization).  
 
-<b>Example with Docker:</b>  
+<b>Example using Docker:</b>  
 cat docker-compose.yml:  
 ```
 services:  
