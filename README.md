@@ -55,7 +55,7 @@ CONNECT_TYPE="all"
 
 You can modify the default values (read the source-code comments).  
 
-./c_wait --help  
+<h6>./c_wait --help</h6>  
 
      --------------------------------------------------------------------------
      -=-                   'c_wait' - ConnectionWait v1.0                   -=-
