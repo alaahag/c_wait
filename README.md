@@ -1,7 +1,7 @@
 # 'c_wait' - ConnectionWait v1.0
 
 <b>Intro:</b>  
-'c_wait' is a DevOps tool, the script will keep running and checking for open-connections for X hosts.
+'c_wait' is a DevOps tool, the script will keep running and checking for open-connections for X hosts.  
 When the task is complete: the script will exit successfully (exit 0).
 
 <b>Where can I use this script?</b>  
