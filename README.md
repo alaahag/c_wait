@@ -53,7 +53,8 @@ SLEEP_TIME="3"
 CONNECT_TYPE="all"  
 ```
 
-(For more help, read the source-code comments, or just run ./c_wait --help)  
+(You can modify the default values, read the source-code comments)  
+run ./c_wait --help  
 
      --------------------------------------------------------------------------
      -=-                   'c_wait' - ConnectionWait v1.0                   -=-
