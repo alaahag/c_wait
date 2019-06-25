@@ -103,6 +103,7 @@ cat entrypoint_django_run.sh
 python3 manage.py runserver 0.0.0.0:8000  
 ```
 --------------------
+
 <br>
-Contact me for anything: alaahag@gmail.com  
-[DevOps, Automation & PT engineer, Looking for my next challenge]
+Contact me: alaahag@gmail.com  
+[DevOps, Automation & PT engineer, Looking for my next challenge].
