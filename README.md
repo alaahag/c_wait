@@ -12,7 +12,7 @@ Let's say that you want to initialize a server + db with Kubernetes or Docker, b
 
 <h3>Features:</h3>  
 
-* Optimized for Kubernetes and Docker images (including full support for the most popular docker-OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).  
+* Optimized for K8s and Docker images (including full support for the most popular OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).  
 * Supporting lots of check-methods (to check for open-connection).  
 * You can choose to run app using args or by the default values.  
 * You can add unlimited number of hosts.  
