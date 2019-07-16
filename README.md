@@ -1,78 +1,107 @@
-# 'c_wait' - ConnectionWait v1.0
+# 'c_wait' - ConnectionWait v1.1
 
 <h3>Intro:</h3>  
 
-<h4>'c_wait' is a DevOps and PT tool, the script will keep running and checking for open-connections for X hosts/ports.  
-When the task is complete: the script will exit successfully (exit 0).  
-If the script fails to run or fails to identify any method for test-connections: it will exit with failure (exit 1).</h4>  
+<h4>'c_wait' is a DevOps and PT tool, the script will keep running and checks for open-connections for X hosts/ports.  
+When the task is complete: the script will exit successfully (else exits with failure).</h4>  
 
 <h3>Where can I use this script?</h3>  
-<h4>When you need to initialize a server + db (with Kubernetes or Docker), but you can't let the server run without a db-connection up first (or else it will fail on initialization and your server will not run properly).</h4>  
+<h4>When you want to initialize a server + db (with Kubernetes or Docker), but you don't want to let the server run before DB-connection (or else: the server will fail on initialization).</h4>  
 
 --------------------
 
 <h3>Features:</h3>  
 
-* Optimized for K8s and Docker images (including full support for the most popular OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).  
-* Supporting lots of check-methods (to check for open-connection).  
-* You can choose to run app using args or by the default values.  
-* You can add unlimited number of hosts.  
-* Allow connection-conditions ('<b>all</b>' hosts must be connected to complete the task, or '<b>any</b>' of them).  
-* Custom messages (easily editable from global values).  
+* Optimized for Kubernetes and Docker images (including full support for the most popular OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).  
+* In addition, including support for: <b>BusyBox, Termux, macOS, Red Hat, SUSE Linux, Manjaro, Endless and other Linux distributions</b>.  
+* Supporting various health-check methods, to check for open-connections.  
+* Allow adding unlimited number of hosts.  
+* Allow connection-mode:  
+  @ 'all' hosts must be connected to complete the task.  
+  @ 'any' of the hosts must be connected to complete the task.  
+* Allow limited/infinity connection-retries.  
+* Custom methods and messages (easily editable from global values below).  
 * Simple, user-friendly and easy to use.  
 
 * Methods tests-order:  
 <b>Netcat</b>  
 <b>Ncat</b>  
-<b>Python</b>  
+<b>Python2</b>  
 <b>Python3</b>  
 <b>Bash</b>  
 <b>cURL</b>  
-<b>Wget</b>     (BusyBox version is not supported)  
-<b>Telnet</b>   (BusyBox version is not supported)  
+<b>Wget</b>      (BusyBox version is not supported)  
+<b>Telnet</b>    (BusyBox version is not supported)  
 <b>Socat</b>  
-<b>Nmap</b>  
 <b>NodeJS</b>  
 <b>Perl</b>  
 <b>Ruby</b>  
 <b>PHP</b>  
-<b>Scala</b>  
-<b>GCC</b>  
-<b>G++</b>  
 <b>TCL</b>  
-<b>JavaJDK</b>  
+<b>Erlang</b>  
+<b>Gawk</b>  
+<b>Nmap</b>  
+<b>Scala</b>  
+<b>R</b>  
+<b>PowerShell</b>  
+<b>GCC</b>  
+<b>Clang</b>  
+<b>Java JDK</b>  
 <b>Elixir</b>  
-<b>GOLang</b>  
+<b>Rust</b>  
+<b>Go</b>  
+<b>Dart</b>  
+<b>D</b>  
+<b>Nim</b>  
+<b>.NET</b>   
 
 --------------------
 
 <h3>Default global values:</h3>  
 
 ```
-HOSTS="db:3306 db2:5432 0.0.0.0"  
+HOSTS="8.8.8.8:53 db:3306"  
 SLEEP_TIME="3"  
-CONNECT_TYPE="all"  
+RETRIES_COUNT="inf"  
+CONNECT_MODE="all"  
+IS_QUIET_MODE="false"  
 ```
 
 <h5>You can modify the default values (read the source-code comments).</h5>  
 
 <h6>./c_wait --help</h6>  
 
-     --------------------------------------------------------------------------
-     -=-                   'c_wait' - ConnectionWait v1.0                   -=-
-     --------------------------------------------------------------------------
-      Usage:    ./c_wait --connect <all/any> --sleep <seconds> <hosts:ports>
-     
-      Examples:
-                ./c_wait 192.168.1.1:22
-                ./c_wait -s 10 myserver:8000
-                ./c_wait -c any localhost mydb1:5432 mydb2:3306 myftp:21
-                ./c_wait --connect all -sleep 5 google.com 0.0.0.0:443
-     
-      Default options:
-                Hosts:              'db:3306 db2:5432 0.0.0.0'
-                -c|--connect        'all' of the selected host(s)
-                -s|--sleep          '3' second(s)
+['c_wait' - ConnectionWait v1.1.0]
+
+Usage:
+  ./c_wait.sh --connect <'all'/'any'>
+     --sleep <secs> --retry <num/'inf'>
+     <hosts:ports ...>
+
+Examples:
+  ./c_wait.sh --sleep 4 ftp:21 192.168.1.1:22
+  ./c_wait.sh --quiet -s 10 -r 3 myserver:8000
+  ./c_wait.sh -c any -q localhost myftp:21
+  ./c_wait.sh --connect all --retry 4 srv:86
+
+Options and default values:
+  <hosts:ports ...>
+     ('8.8.8.8:53 db:3306')
+
+  -c | --connect <'all'/'any'>
+     ('all' of the selected hosts)
+
+  -s | --sleep <seconds>
+     ('3' seconds)
+
+  -r | --retry <number/'infinity'>
+     ('infinity' connection-retries)
+
+  -q | --quiet
+     (minimal output messages? 'false')
+
+  -h | --help | /?
+     (show this usage)
     
 --------------------
 
@@ -117,4 +146,4 @@ python3 manage.py runserver 0.0.0.0:8000
 --------------------
 
 Contact me for anything: alaahag@gmail.com  
-<h5>[DevOps, Automation & PT engineer, Looking for my next challenge].</h5>
+<h5>[PT & DevOPS developer, Looking for my next challenge].</h5>
