@@ -13,7 +13,7 @@ When the task is complete: the script will exit successfully (or else it will ex
 <h3>Features:</h3>  
 
 * Optimized for Kubernetes and Docker images (including full support for the most popular OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage, openSUSE</b>).  
-* In addition, including support for: <b>BusyBox, Termux, macOS, Red Hat, SUSE Linux, Manjaro, Endless and other Linux distributions</b>.  
+* In addition, support for: <b>BusyBox, Termux, macOS, Red Hat, SUSE Linux, Manjaro, Endless and other Linux distributions</b>.  
 * Supporting various health-check methods, to check for open-connections.  
 * Allow adding unlimited number of hosts.  
 * Allow connection-mode:  
