@@ -1,4 +1,4 @@
-# 'c_wait' - ConnectionWait v1.1
+# 'c_wait' - ConnectionWait v1.1.0
 
 <h3>Intro:</h3>  
 
