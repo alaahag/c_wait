@@ -70,7 +70,7 @@ IS_QUIET_MODE="false"
 <h5>You can modify the default values (read the source-code comments).</h5>  
 
 <h6>./c_wait --help</h6>  
-
+```
 ['c_wait' - ConnectionWait v1.1.0]
 
 Usage:
@@ -102,6 +102,7 @@ Options and default values:
 
   -h | --help | /?
      (show this usage)
+```
     
 --------------------
 
