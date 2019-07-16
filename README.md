@@ -23,7 +23,7 @@ When the task is complete: the script will exit successfully (or else it will ex
 * Custom methods and messages (easily editable from global values below).  
 * Simple, user-friendly and easy to use.  
 
-* Methods tests-order:  
+* Methods (health-check) tests-order:  
 <b>Netcat</b>  
 <b>Ncat</b>  
 <b>Python2</b>  
