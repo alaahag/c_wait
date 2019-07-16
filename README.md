@@ -147,5 +147,5 @@ python3 manage.py runserver 0.0.0.0:8000
 
 --------------------
 
-Contact me for anything: alaahag@gmail.com  
+Contact me for anything: alaahag@gmail.com , +972527337763  
 <h5>[PT & DevOPS developer, Looking for my next challenge].</h5>
