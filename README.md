@@ -176,8 +176,8 @@ python3 manage.py runserver 0.0.0.0:8000
 ```
 * GNAT(Ada) + GFortran -> Because it comes with GCC, and the GCC is faster.  
 * Scheme + Common Lisp + Haskell + Gforth -> Need to install some extra packages / libraries.  
-* Swift -> We have Clang, and it runs slower than it.  
-* Kotlin -> We have a JAVA-JDK and it runs slower than it.  
+* Swift -> We have Clang, and Swift runs slower than it.  
+* Kotlin -> We have a JAVA-JDK, and Kotlin runs slower than it.  
 * MySQL + PostgreSQL -> We might consider adding it (there's a small problem with timeout).  
 ```
 
