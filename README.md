@@ -1,4 +1,4 @@
-# 'c_wait' - ConnectionWait v1.1.0
+# 'c_wait' - ConnectionWait v1.2
 
 <h3>Intro:</h3>  
 
@@ -10,54 +10,74 @@ When the task is complete: the script will exit successfully (or else it will ex
 
 --------------------
 
+<h3>What's new in v1.2:</h3>  
+
+* Added a new option to display all supported and installed methods (./c_wait.sh -i).  
+* Added support for BusyBox version of Telnet + Wget.  
+* Added more testing-methods (SSH, MongoDB-Client, Groovy, Zsh, Ocaml).  
+* Fixed bugs.  
+* Optimized methods.  
+* Optimzed code.  
+* Deleted Ada (GNAT) method (not needed because it comes with GCC, and the GCC runs faster).  
+
+--------------------
+
 <h3>Features:</h3>  
 
 * Optimized for Kubernetes and Docker images (including full support for the most popular OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage and openSUSE</b>).  
-* In addition, support for: <b>BusyBox, Termux, macOS, Red Hat, SUSE Linux, Manjaro, Endless and other Linux distributions</b>.  
+* In addition, support for: <b>BusyBox, Termux, macOS, RedHat, SUSELinux, ArchLinux, Mageia, GentooLinux, Endless and other Linux distributions</b>.  
 * Supporting various health-check methods, to check for open-connections.  
 * Allow adding unlimited number of hosts.  
 * Allow connection-mode:  
   @ 'all' hosts must be connected to complete the task.  
   @ 'any' of the hosts must be connected to complete the task.  
 * Allow limited/infinity connection-retries.  
+* You can view the installed and supported methods on X machine.
 * Custom methods and messages (easily editable from global values below).  
 * Simple, user-friendly and easy to use.  
 
 * Methods (health-check) tests-order:  
 <b>Netcat</b>  
-<b>Ncat</b>  
-<b>Python2</b>  
+<b>SSH</b>  
+<b>Python</b>  
 <b>Python3</b>  
 <b>Bash</b>  
 <b>cURL</b>  
-<b>Wget</b>      (BusyBox version is not supported)  
-<b>Telnet</b>    (BusyBox version is not supported)  
+<b>Wget</b>
+<b>Telnet</b>  
 <b>Socat</b>  
 <b>NodeJS</b>  
-<b>Perl</b>  
 <b>Ruby</b>  
+<b>Perl</b>  
 <b>PHP</b>  
-<b>TCL</b>  
-<b>Erlang</b>  
+<b>Tcl</b>  
+<b>OpenSSL</b>  
 <b>Gawk</b>  
+<b>Ncat</b>  
 <b>Nmap</b>  
+<b>Zsh</b>  
+<b>MongoDB-Client</b>  
+<b>Erlang</b>  
+<b>Clojure</b>  
+<b>Groovy</b>  
 <b>Scala</b>  
 <b>R</b>  
 <b>PowerShell</b>  
 <b>GCC</b>  
 <b>Clang</b>  
-<b>Java JDK</b>  
 <b>Elixir</b>  
+<b>Java-JDK</b>  
 <b>Rust</b>  
 <b>Go</b>  
 <b>Dart</b>  
 <b>D</b>  
 <b>Nim</b>  
-<b>.NET</b>   
+<b>OCaml</b>  
+<b>.NET</b>  
 
 --------------------
 
-<h3>Default global values:</h3>  
+<h3>Default global values [with args]:</h3>  
 
 ```
 HOSTS="8.8.8.8:53 db:3306"  
@@ -72,7 +92,7 @@ IS_QUIET_MODE="false"
 <h6>./c_wait --help</h6>  
 
 ```
-['c_wait' - ConnectionWait v1.1.0]
+[ 'c_wait' - ConnectionWait v1.2 ]
 
 Usage:
   ./c_wait.sh --connect <'all'/'any'>
@@ -99,10 +119,14 @@ Options and default values:
      ('infinity' connection-retries)
 
   -q | --quiet
-     (minimal output messages? 'false')
+     (minimal output? 'false')
+
+Info:
+  -i | --installed
+     (display installed methods)
 
   -h | --help | /?
-     (show this usage)
+     (display this usage)
 ```
     
 --------------------
@@ -144,6 +168,17 @@ networks:
 ./c_wait.sh db:5432  
 python3 manage.py runserver 0.0.0.0:8000  
 ```
+
+--------------------
+
+<h3>Considered but not added:</h3>
+<b>GNAT(Ada) + GFortran</b> -> Because it comes with GCC, and the GCC is faster.
+<b>Scheme + Common Lisp + Haskell + Gforth</b> -> Need to install some extra packages / libraries, so not good for us.
+<b>Swift</b> -> We have Clang, and it runs faster than it.
+<b>Kotlin</b> -> We have a JAVA-JDK and it runs faster than it.
+
+<b>MySQL</b> -> We might consider adding it (there's a small problem with timeout).
+<b>PostgreSQL</b> -> We might consider adding it (there's a small problem with timeout).
 
 --------------------
 
