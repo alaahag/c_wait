@@ -13,10 +13,10 @@ When the task is complete: the script will exit successfully (or else it will ex
 <h3>What's new in v1.2:</h3>  
 
 * Added a new option to display all supported and installed methods (./c_wait.sh -i).  
-* Added support for BusyBox version of Telnet + Wget.  
+* Support for BusyBox version of Telnet + Wget.  
 * Added more testing-methods (SSH, MongoDB-Client, Groovy, Zsh, Ocaml).  
 * Fixed bugs.  
-* Optimized methods.  
+* Optimized methods and performance.  
 * Optimzed code.  
 * Deleted Ada (GNAT) method (not needed because it comes with GCC, and the GCC runs faster).  
 
@@ -178,7 +178,7 @@ python3 manage.py runserver 0.0.0.0:8000
 * Scheme + Common Lisp + Haskell + Gforth -> Need to install some extra packages / libraries.  
 * Swift -> We have Clang, and Swift runs slower than it.  
 * Kotlin -> We have a JAVA-JDK, and Kotlin runs slower than it.  
-* MySQL + PostgreSQL -> We might consider adding it (there's a small problem with timeout).  
+* MySQL + PostgreSQL -> We might consider adding them (there's a small problem with timeout).  
 ```
 
 --------------------
