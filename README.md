@@ -24,7 +24,7 @@ When the task is complete: the script will exit successfully (or else it will ex
 
 <h3>Features:</h3>  
 
-* Optimized for Kubernetes and Docker images (including full support for the most popular OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage and openSUSE</b>).  
+* Optimized for Kubernetes and Docker images (including full support for the most popular OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage</b> and <b>openSUSE</b>).  
 * In addition, support for: <b>BusyBox, Termux, macOS, RedHat, SUSELinux, ArchLinux, Mageia, GentooLinux, Endless and other Linux distributions</b>.  
 * Supporting various health-check methods, to check for open-connections.  
 * Allow adding unlimited number of hosts.  
@@ -171,9 +171,9 @@ python3 manage.py runserver 0.0.0.0:8000
 
 --------------------
 
-<h3>Considered but not added:</h3>
+<h3>Considered but not added:</h3>  
 <b>GNAT(Ada) + GFortran</b> -> Because it comes with GCC, and the GCC is faster.  
-<b>Scheme + Common Lisp + Haskell + Gforth</b> -> Need to install some extra packages / libraries, so not good for us.  
+<b>Scheme + Common Lisp + Haskell + Gforth</b> -> Need to install some extra packages / libraries.  
 <b>Swift</b> -> We have Clang, and it runs faster than it.  
 <b>Kotlin</b> -> We have a JAVA-JDK and it runs faster than it.  
 
