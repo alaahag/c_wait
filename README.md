@@ -43,7 +43,7 @@ When the task is complete: the script will exit successfully (or else it will ex
 <b>Python3</b>  
 <b>Bash</b>  
 <b>cURL</b>  
-<b>Wget</b>
+<b>Wget</b>  
 <b>Telnet</b>  
 <b>Socat</b>  
 <b>NodeJS</b>  
