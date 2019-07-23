@@ -1,20 +1,23 @@
 #!/bin/sh
 
-# 'c_wait' ConnectionWait v1.1.0
+# 'c_wait' ConnectionWait v1.2
 # Author: Alaa H.J <MasterX>
 
-# DO NOT TOUCH THE METHODS BELOW IF YOU DON'T KNOW WHAT YOU'RE DOING!
-# Methods health-check order [if X method exists in the machine] (you can change the methods order, or if you want to disable/enable some methods):
-METHODS="nc ncat python python3 bash curl wget telnet socat node perl ruby php tclsh erl gawk nmap scala Rscript pwsh gcc clang javac elixirc rustc go dart dmd nim dotnet"
-# Netcat, Ncat, Python2, Python3, Bash, cURL, Wget, Telnet, Socat, NodeJS, Perl, Ruby, PHP, TCL, Erlang, Gawk, Nmap, Scala, R, PowerShell, GCC, LLVM Clang, JavaJDK, Elixir, Rust, Go, Dart, D, Nim, .NET
-# @ The BusyBox version of wget & telnet is not supported.
 
-# Default global values:
-HOSTS="8.8.8.8:53 db:3306" # IPs / HostNames.           Example: db:3306,db2:5432,0.0.0.0,google.com
+# DO NOT TOUCH THE METHODS BELOW IF YOU DON'T KNOW WHAT YOU'RE DOING!
+# Methods order (health-check) [if X method exists and installed on this machine] (you can change the methods order, or if you want to disable/enable some methods):
+METHODS="nc ssh python python3 bash curl wget telnet socat node ruby perl php tclsh openssl gawk ncat nmap zsh mongo erl clojure groovy scala Rscript pwsh gcc clang elixirc javac rustc go dart dmd nim ocaml dotnet"
+# Netcat, SSH, Python, Python3, Bash, cURL, Wget, Telnet, Socat, NodeJS, Ruby, Perl, PHP, Tcl, OpenSSL, Gawk, Ncat, Nmap, Zsh, MongoDB-Client, Erlang, Clojure, Groovy, Scala, R, PowerShell, GCC, Clang, Elixir, Java-JDK, Rust, Go, Dart, D, Nim, OCaml, .NET
+
+# Default global values [args]:
+HOSTS="8.8.8.8:53 db:3306" # IPs / HostNames.           Example: db:3306,db2:5432,0.0.0.0,google.com [default *:80]
 SLEEP_TIME="3" # Sleep for X seconds.
 RETRIES_COUNT="inf" # Max-retries for health-check.     '0' | 'inf' | 'infinity': For infinity connection-retries.
 CONNECT_MODE="all" # Options: 'all' / 'any'.            'all': It will pass if all selected hosts are connected. | 'any': It will pass if any of the selected hosts are connected.
 IS_QUIET_MODE="false" # Options: 'true' / 'false'.      Hide / show output messages (but always alert when the app is about to get started or terminated).
+
+# Timeout [not arg] (You can modify the connection-timeout if you have a very slow internet connection [default: '2' seconds]):
+TIMEOUT="2"
 
 # Custom messages:
 readonly INIT_MESSAGE="'c_wait' - Initializing" # Show a custom message when app is about to get started (you can clear the text to suppress this message).
@@ -32,7 +35,7 @@ Terminated()
 
 Usage()
 {
-    echo "['c_wait' - ConnectionWait v1.1.0]"
+    echo "[ 'c_wait' - ConnectionWait v1.2 ]"
     echo
     echo "Usage:"
     echo "  $0 --connect <'all'/'any'>"
@@ -59,28 +62,60 @@ Usage()
     echo "     ('$RETRIES_COUNT' connection-retries)"
     echo
     echo "  -q | --quiet"
-    echo "     (minimal output messages? '$IS_QUIET_MODE')"
+    echo "     (minimal output? '$IS_QUIET_MODE')"
+    echo
+    echo "Info:"
+    echo "  -i | --installed"
+    echo "     (display installed methods)"
     echo
     echo "  -h | --help | /?"
-    echo "     (show this usage)"
-    echo
-    Terminated
+    echo "     (display this usage)"
+    exit 1
 }
 
 
 Help()
 {
-    echo "[*] Use '$0 --help' for Usage."
+    echo "[*] Type: '$0 --help' for usage."
     echo
     Terminated
 }
 
 
-Invalid_Params()
+Print_Installed_Methods()
 {
-    # Accepts error messages or prints default error message
-    if [ $# -eq 0 ]; then echo "[x] [$(date +%T)] 'c_wait' - Invalid parameters / default options."; else echo "$1"; fi
-    Help
+    echo "[*] Installed and supported methods:"
+    for method in $METHODS; do
+        if command -v "$method" >/dev/null; then
+            case $method in
+                nc) printf "Netcat "            ;;
+                ssh) printf "SSH "              ;;
+                curl) printf "cURL "            ;;
+                node) printf "NodeJS "          ;;
+                php) printf "PHP "              ;;
+                tclsh) printf "Tcl "            ;;
+                openssl) printf "OpenSSL "      ;;
+                mongo) printf "MongoDB-Client " ;;
+                erl) printf "Erlang "           ;;
+                Rscript) printf "R "            ;;
+                pwsh) printf "PowerShell "      ;;
+                gcc) printf "GCC "              ;;
+                elixirc) printf "Elixir "       ;;
+                javac) printf "Java-JDK "       ;;
+                rustc) printf "Rust "           ;;
+                dmd) printf "D "                ;;
+                ocaml) printf "OCaml "          ;;
+                dotnet) printf ".NET "          ;;
+                *)
+                    # Else, capitalize first letter and print
+                    local fLetter=$(echo $method | cut -c1 | tr [a-z] [A-Z])
+                    local restLetters=$(echo $method | cut -c2-)
+                    printf "$fLetter$restLetters "
+                    ;;
+            esac
+        fi
+    done
+    echo; exit 1
 }
 
 
@@ -92,14 +127,15 @@ Validate_Args()
         local param2=""
 
         if [ -n "$2" ]; then param2="$2"; fi
-
         case "$param1" in
             -c|--connect)
                 if [ "$param2" = "any" ] || [ "$param2" = "all" ]; then
                     CONNECT_MODE="$param2"
                     shift 2
                 else
-                    Invalid_Params "[x] [$(date +%T)] 'c_wait' - Invalid --connect value (use '--connect all' or '--connect any')."
+                    echo "[x] [$(date +%T)] 'c_wait' - Invalid --connect [value] (value must be 'all' or 'any')!"
+                    # Call function to display usage and terminate app
+                    Help
                 fi
                 ;;
 
@@ -108,7 +144,8 @@ Validate_Args()
                     SLEEP_TIME="$param2"
                     shift 2
                 else
-                    Invalid_Params "[x] [$(date +%T)] 'c_wait' - Invalid --sleep value (must be a number)."
+                    echo "[x] [$(date +%T)] 'c_wait' - Invalid: --sleep [value] (value must be a number)!"
+                    Help
                 fi
                 ;;
 
@@ -120,7 +157,8 @@ Validate_Args()
                     RETRIES_COUNT="infinity"
                     shift 2
                 else
-                    Invalid_Params "[x] [$(date +%T)] 'c_wait' - Invalid --retries value (must be a number or 'inf'|'infinity')."
+                    echo "[x] [$(date +%T)] 'c_wait' - Invalid: --retries [value] (value must be a number or 'inf'|'infinity')!"
+                    Help
                 fi
                 ;;
 
@@ -129,16 +167,22 @@ Validate_Args()
                 shift
                 ;;
 
+            -i|--installed)
+                # Call function to print installed and supported methods
+                Print_Installed_Methods
+                ;;
+
             -h|--help|/?)
                 Usage
                 ;;
 
             -*)
-                Invalid_Params
+                echo "[x] [$(date +%T)] 'c_wait' - Invalid parameters: '$1'!"
+                Help
                 ;;
 
             *)
-                # Hosts:Ports, default port is 80 if not set with hosts (example: google.com <- port 80)
+                # Hosts:Ports [default *:80]
                 if echo "$param1" | grep -Eo "^[a-zA-Z0-9._-]+(:([1-9]{1}|[0-9]{2,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$" >/dev/null; then
                     local temp_host=$(echo "$param1" | cut -d: -f1)
                     local temp_port=$(echo "$param1" | cut -d: -f2)
@@ -146,7 +190,8 @@ Validate_Args()
                     temp_hosts="$temp_hosts $temp_host:$temp_port"
                     shift
                 else
-                    Invalid_Params
+                    echo "[x] [$(date +%T)] 'c_wait' - Invalid host values!"
+                    Help
                 fi
                 ;;
         esac
@@ -155,11 +200,20 @@ Validate_Args()
     if [ -z "$temp_hosts" ]; then
         # Missing hosts message : terminate app
         if [ -z "$HOSTS" ]; then echo "[x] [$(date +%T)] 'c_wait' - Missing hosts!"; Terminated; fi
-        # Recursive to validate hosts string (if no args there to check)
+        # Call function to recursively validate host values (if there are no args from input)
         Validate_Args $HOSTS
     else
-        HOSTS="$temp_hosts"
+        # Remove trailing spaces
+        HOSTS="$(echo "$temp_hosts" | awk '{$1=$1};1')"
     fi
+}
+
+
+Generate_Exec_Package()
+{
+    # Args: $1 will contain "MethodHostPort"
+    # Global
+    EXEC_PACKAGE=$(echo "cwait_$1" | sed 's/\./dot/g')
 }
 
 
@@ -171,15 +225,17 @@ Method_On_Action()
 
     case $method in
         "nc")
-            "$method" -zvw2 "$host" "$port" >/dev/null 2>&1
+            "$method" -zvw"$TIMEOUT" "$host" "$port" >/dev/null 2>&1
             ;;
 
-        "ncat")
-            "$method" -w 2 "$host" "$port" < /dev/null 2>/dev/null
+        "ssh")
+            local ssh_res=$($TIMEOUT_CMD "$method" -o BatchMode=yes -p "$port" "$host" 2>&1 | grep -iEo "exchange_identification|Permission denied|verification failed")
+            if [ -n "$ssh_res" ]; then GOOD_CONNECT_RESULT="0"; fi
+            return
             ;;
 
         "python"|"python3")
-            "$method" -c 'exec("""\nimport socket;socket.setdefaulttimeout(2);\ntry:exit(0) if 0 == socket.socket(socket.AF_INET,socket.SOCK_STREAM).connect_ex(("'$host'",'$port')) else exit(1)\nexcept socket.error:exit(1)\n""")' 2>/dev/null
+            "$method" -c 'exec("""\nimport socket;socket.setdefaulttimeout('$TIMEOUT');\nif socket.socket(socket.AF_INET,socket.SOCK_STREAM).connect(("'$host'",'$port'))==1:exit(1)\n""")' 2>/dev/null
             ;;
 
         "bash")
@@ -187,7 +243,7 @@ Method_On_Action()
             ;;
 
         "curl")
-            case $("$method" -kI --connect-timeout 2 "$host":"$port" 2>&1 | grep -Eo '\([0-9]+\)') in
+            case $("$method" -kI --connect-timeout "$TIMEOUT" "$host":"$port" 2>&1 | grep -Eo '\([0-9]+\)') in
                 ""|"(8)"|"(52)"|"(56)")
                     GOOD_CONNECT_RESULT="0"
                     ;;
@@ -196,156 +252,190 @@ Method_On_Action()
             ;;
 
         "wget")
-            local wget_res=$("$method" -t 1 --spider --connect-timeout 2 "$host":"$port" 2>&1 | grep -iEo "\<connected\>|\<header\>|\<response\>")
+            local wget_res=$("$method" -t 1 --spider -S -T "$TIMEOUT" "$host":"$port" 2>&1 | grep -iEo "\<connected\>|\<header\>|\<response\>|http/")
             if [ -n "$wget_res" ]; then GOOD_CONNECT_RESULT="0"; fi
             return
             ;;
 
         "telnet")
-            local telnet_res=$($TIMEOUT_CMD "$method" "$host" "$port" 2>&1 | grep -io "\<connected\>")
+            local telnet_res=$($TIMEOUT_CMD "$method" "$host" "$port" </dev/null 2>/dev/null | grep -io "\<connected\>")
             if [ -n "$telnet_res" ]; then GOOD_CONNECT_RESULT="0"; fi
             return
             ;;
 
         "socat")
-            "$method" /dev/null TCP4:"$host":"$port",connect-timeout=2 >/dev/null 2>&1
+            "$method" /dev/null TCP4:"$host":"$port",connect-timeout="$TIMEOUT" >/dev/null 2>&1
             ;;
 
         "node")
-            "$method" -e "var net=require('net');var s=new net.Socket();s.setTimeout(2000,function(){s.destroy();});s.connect($port,'$host',function(){process.exit(0);});s.on('close',function(){process.exit(1);});s.on('error',function(){process.exit(1);});" 2>/dev/null
-            ;;
-
-        "perl")
-            "$method" -e 'use IO::Socket::INET;my $s=new IO::Socket::INET(PeerAddr=>"'$host'",PeerPort=>"'$port'",Proto=>"tcp",Timeout=>"2");if($s){$s->close;exit(0);}else{exit(1);};' 2>/dev/null
+            "$method" -e "var net=require('net');var s=new net.Socket();s.setTimeout("$TIMEOUT"000,function(){s.destroy()});s.connect($port,'$host',function(){process.exit(0)});s.on('close',function(){process.exit(1)})" 2>/dev/null
             ;;
 
         "ruby")
-            "$method" -e "require 'socket';require 'timeout';begin;Timeout::timeout(2) do;begin;s=TCPSocket.new('$host',$port);s.close;exit(0);end;end;rescue;exit(1);end" 2>/dev/null
+            "$method" -e "require 'socket';require 'timeout';Timeout::timeout("$TIMEOUT") do;s=TCPSocket.new('$host',$port);s.close;end" 2>/dev/null
+            ;;
+
+        "perl")
+            "$method" -e 'use IO::Socket::INET;my $s=new IO::Socket::INET(PeerAddr=>"'$host'",PeerPort=>"'$port'",Proto=>"tcp",Timeout=>"'$TIMEOUT'");if($s){$s->close}else{exit(1)}' 2>/dev/null
             ;;
 
         "php")
-            "$method" -r '$c=@fsockopen("'$host'",'$port',$errno,$errstr,2);if(is_resource($c)){fclose($c);exit(0);}else{exit(1);}' 2>/dev/null
+            "$method" -r '$c=@fsockopen("'$host'",'$port',$errno,$errstr,'$TIMEOUT');if(is_resource($c)){fclose($c);}else{exit(1);}' 2>/dev/null
             ;;
 
         "tclsh")
-            echo 'if [catch {socket -async "'$host'" '$port'} s] {exit 1;};fileevent $s writable {set c 1};after 2000 set c 0;vwait c;if {$c} {exit 0};catch {close $s;exit 1}' | tclsh 2>/dev/null
+            echo 'if [catch {socket -async "'$host'" '$port'} s] {exit 1};fileevent $s writable {set c 1};after '$TIMEOUT'000 set c 0;vwait c;if {$c} {close $s;exit 0};catch {exit 1}' | tclsh 2>/dev/null
             ;;
 
-        "erl")
-            "$method" -noshell -eval 'case gen_tcp:connect("'$host'",'$port',[],2000) of {ok,S}->gen_tcp:close(S),init:stop();{error,_}->erlang:halt(1)end.' 2>/dev/null
+        "openssl")
+            local openssl_res=$($TIMEOUT_CMD "$method" s_client -connect "$host":"$port" </dev/null 2>/dev/null | head -1 | grep -io "\<connected\>")
+            if [ -n "$openssl_res" ]; then GOOD_CONNECT_RESULT="0"; fi
+            return
             ;;
 
         "gawk")
             $TIMEOUT_CMD "$method" 'BEGIN {S="/inet/tcp/0/'$host'/'$port'";print |& S;x=close(S);exit x}' 2>/dev/null
             ;;
 
+        "ncat")
+            "$method" -w "$TIMEOUT" "$host" "$port" </dev/null 2>/dev/null
+            ;;
+
         "nmap")
-            local nmap_res=$("$method" --host-timeout 2000ms --open "$host" -p "$port" 2>&1 | grep -io "\<open\>")
+            local nmap_res=$("$method" --host-timeout "$TIMEOUT"000ms --open "$host" -p "$port" 2>&1 | grep -io "\<open\>")
             if [ -n "$nmap_res" ]; then GOOD_CONNECT_RESULT="0"; fi
             return
             ;;
 
+        "zsh")
+            $TIMEOUT_CMD "$method" -c 'zmodload zsh/net/tcp;ztcp '$host' '$port'' 2>/dev/null
+            ;;
+
+        "mongo")
+            local mongo_res=$($TIMEOUT_CMD "$method" --host "$host" --port "$port" --verbose </dev/null 2>&1 | head -4 | grep -io "\<connected\>")
+            if [ -n "$mongo_res" ]; then GOOD_CONNECT_RESULT="0"; fi
+            return
+            ;;
+
+        "erl")
+            "$method" -noshell -eval 'case gen_tcp:connect("'$host'",'$port',[],'$TIMEOUT'000) of {ok,S}->gen_tcp:close(S),init:stop();{error,_}->erlang:halt(1)end.' 2>/dev/null
+            ;;
+
+        "clojure")
+            "$method" -e '(def s (java.net.Socket.)) (.connect s (java.net.InetSocketAddress. "'$host'" '$port')'$TIMEOUT'000)(.close s)' >/dev/null 2>&1
+            ;;
+
+        "groovy")
+            "$method" -e 'Socket s=new Socket();s.connect(new InetSocketAddress("'$host'",'$port'),'$TIMEOUT'000);s.close()' 2>/dev/null
+            ;;
+
         "scala")
-            "$method" -e 'object TestPort{def main(args: Array[String]){try{val s=new java.net.Socket();s.connect(new java.net.InetSocketAddress("'$host'",'$port'),2000);s.close();System.exit(0);}catch{case e: Exception=>{System.exit(1);}}}}' 2>/dev/null
+            "$method" -nobootcp -nc -e 'object T{def main(args:Array[String]){val s=new java.net.Socket();s.connect(new java.net.InetSocketAddress("'$host'",'$port'),'$TIMEOUT'000);s.close()}}' 2>/dev/null
             ;;
 
         "Rscript")
-            $TIMEOUT_CMD "$method" -e 'options(warn=-2);tryCatch({s<-socketConnection(host="'$host'",port='$port');close(s);quit(status=0)},error=function(e){quit(status=1)})' 2>/dev/null
+            $TIMEOUT_CMD "$method" -e 'options(warn=-2);{s<-socketConnection(host="'$host'",port='$port');close(s)}' 2>/dev/null
             ;;
 
         "pwsh")
-            "$method" -Command '$t=New-Object Net.Sockets.TcpClient;$c=$t.BeginConnect("'$host'",'$port',$null,$null);$w=$c.AsyncWaitHandle.WaitOne(2000,$false);if(!$w){$t.Close();exit 1;}else{if($t.Connected){$t.EndConnect($c);$t.Close();exit 0;}else{$t.Close();exit 1;}}' 2>/dev/null
+            "$method" -Command '$t=New-Object Net.Sockets.TcpClient;$c=$t.BeginConnect("'$host'",'$port',$null,$null);$w=$c.AsyncWaitHandle.WaitOne('$TIMEOUT'000,$false);if(!$w){$t.Close();exit 1}else{if($t.Connected){$t.EndConnect($c);$t.Close()}else{exit 1}}' 2>/dev/null
             ;;
 
         "gcc"|"clang")
-            local package="cwait_$host$port.cpp"
-            local exec_package=$(echo "cwait_cpp_$host$port" | sed 's/\./dot/g')
-            if [ -s "$exec_package" ]; then
-                ./"$exec_package" 2>/dev/null
+            # Call function to generate exec filename into variable
+            Generate_Exec_Package "$method$host$port"
+            local package="$EXEC_PACKAGE.c"
+            if [ -s "$EXEC_PACKAGE" ]; then
+                ./"$EXEC_PACKAGE" 2>/dev/null
             else
-                echo '''
-                    #include<unistd.h>
-                    #include<string.h>
-                    #include<netdb.h>
-                    #include<sys/socket.h>
-                    #include<netinet/in.h>
-                    int main(){int s;struct sockaddr_in sa;struct hostent *sv;s=socket(AF_INET,SOCK_STREAM,0);if (s<0) return 1;sv=gethostbyname("'$host'");if (sv==NULL) return 1;bzero((char *) &sa,sizeof(sa));sa.sin_family=AF_INET;bcopy((char *)sv->h_addr,(char *)&sa.sin_addr.s_addr,sv->h_length);sa.sin_port=htons('$port');struct timeval timeout={2,0};if(setsockopt(s,SOL_SOCKET,SO_SNDTIMEO,(const void*) &timeout,sizeof(timeout))!=0) return 1;if(connect(s,(struct sockaddr *) &sa,sizeof(sa))<0)return 1;else{close(s);return 0;}}
-                    ''' > "$package" && "$method" "$package" -o "$exec_package" >/dev/null 2>&1 && ./"$exec_package" 2>/dev/null
-            fi
-            ;;
-
-        "javac")
-            local package="cwait_$host$port.java"
-            local class_package=$(echo "cwait_java_$host$port" | sed 's/\./dot/g')
-            if [ -s "$class_package" ]; then
-                java "$class_package" 2>/dev/null
-            else
-                echo 'import java.net.Socket;import java.net.InetSocketAddress;class '$class_package'{public static void main(String[] args){try{Socket s=new Socket();s.connect(new InetSocketAddress("'$host'",'$port'),2000);s.close();System.exit(0);}catch(Exception e){System.exit(1);}}}' > "$package" && "$method" "$package" >/dev/null 2>&1 && java "$class_package" 2>/dev/null
+                printf "%s\n" "#include<unistd.h>" "#include<string.h>" "#include<netdb.h>" "#include<sys/socket.h>" "#include<netinet/in.h>" "#include <sys/time.h>" "int main(){int s;struct sockaddr_in sa;struct hostent *sv;s=socket(AF_INET,SOCK_STREAM,0);sv=gethostbyname(\"$host\");if (sv==NULL) return 1;bzero((char *) &sa,sizeof(sa));sa.sin_family=AF_INET;bcopy((char *)sv->h_addr,(char *)&sa.sin_addr.s_addr,sv->h_length);sa.sin_port=htons($port);struct timeval timeout={$TIMEOUT,0};if(setsockopt(s,SOL_SOCKET,SO_SNDTIMEO,(const void*) &timeout,sizeof(timeout))!=0 || connect(s,(struct sockaddr *) &sa,sizeof(sa))<0) return 1;else close(s);}" > "$package" && "$method" "$package" -o "$EXEC_PACKAGE" >/dev/null 2>&1 && ./"$EXEC_PACKAGE" 2>/dev/null
             fi
             ;;
 
         "elixirc")
-            local package="cwait_$host$port.ex"
+            Generate_Exec_Package "$method$host$port"
+            local package="$EXEC_PACKAGE.ex"
             if [ -s "$package" ]; then
                 "$method" "$package" 2>/dev/null
             else
-                echo "case :gen_tcp.connect('$host',$port,[],2000)do{:ok,s}->:gen_tcp.close(s);System.halt(0);{:error,_}->System.halt(1);end" > "$package" && "$method" "$package" 2>/dev/null
+                echo "case :gen_tcp.connect('$host',$port,[],"$TIMEOUT"000)do{:ok,s}->:gen_tcp.close(s);{:error,_}->System.halt(1);end" > "$package" && "$method" "$package" 2>/dev/null
+            fi
+            ;;
+
+        "javac")
+            Generate_Exec_Package "$method$host$port"
+            local package="$EXEC_PACKAGE.java"
+            if [ -s "$EXEC_PACKAGE" ]; then
+                java "$EXEC_PACKAGE" 2>/dev/null
+            else
+                echo 'import java.net.Socket;import java.net.InetSocketAddress;class '$EXEC_PACKAGE'{public static void main(String[] args){try{Socket s=new Socket();s.connect(new InetSocketAddress("'$host'",'$port'),'$TIMEOUT'000);s.close();}catch(Exception e){System.exit(1);}}}' > "$package" && "$method" "$package" >/dev/null 2>&1 && java "$EXEC_PACKAGE" 2>/dev/null
             fi
             ;;
 
         "rustc")
-            local package="$(echo "cwait_$host$port" | sed 's/\./dot/g').rs"
-            local exec_package=$(echo "cwait_rs_$host$port" | sed 's/\./dot/g')
-            if [ -s "$exec_package" ]; then
-                ./"$exec_package" 2>/dev/null
+            Generate_Exec_Package "$method$host$port"
+            local package="$EXEC_PACKAGE.rs"
+            if [ -s "$EXEC_PACKAGE" ]; then
+                ./"$EXEC_PACKAGE" 2>/dev/null
             else
-                echo 'use std::net::TcpStream;use std::time::Duration;use std::process::exit;use std::net::ToSocketAddrs;use std::net::SocketAddr;fn r_ad()->Result<SocketAddr,String>{let mut ad=match "'$host:$port'".to_socket_addrs(){Ok(ad)=>ad,Err(_e)=>exit(1),};match ad.next(){None=>exit(1),Some(ad)=>Ok(ad),}}fn main(){if let Ok(_s)=TcpStream::connect_timeout(&r_ad().unwrap(),Duration::from_secs(2)){exit(0);}else{exit(1);}}' > "$package" && "$method" "$package" -o "$exec_package" >/dev/null 2>&1 && ./"$exec_package" 2>/dev/null
+                echo 'use std::net::TcpStream;use std::time::Duration;use std::process::exit;use std::net::ToSocketAddrs;use std::net::SocketAddr;fn r_ad()->Result<SocketAddr,String>{let mut ad=match "'$host:$port'".to_socket_addrs(){Ok(ad)=>ad,Err(_e)=>exit(1),};match ad.next(){None=>exit(1),Some(ad)=>Ok(ad),}}fn main(){if let Err(_e)=TcpStream::connect_timeout(&r_ad().unwrap(),Duration::from_secs('$TIMEOUT')){exit(1)}}' > "$package" && "$method" "$package" -o "$EXEC_PACKAGE" >/dev/null 2>&1 && ./"$EXEC_PACKAGE" 2>/dev/null
             fi
             ;;
 
         "go")
-            local package="cwait_$host$port.go"
+            Generate_Exec_Package "$method$host$port"
+            local package="$EXEC_PACKAGE.go"
             if [ -s "$package" ]; then
                 "$method" run "$package" 2>/dev/null
             else
-                echo 'package main;import("net";"os";"time";);func main(){c,e:=net.DialTimeout("tcp","'$host:$port'",time.Duration(2)*time.Second);if e,ok:=e.(*net.OpError);ok && e.Timeout(){os.Exit(1);};if e!=nil{os.Exit(1);};defer c.Close();os.Exit(0);}' > "$package" && "$method" run "$package" 2>/dev/null
+                echo 'package main;import("net";"os";"time";);func main(){c,e:=net.DialTimeout("tcp","'$host:$port'",time.Duration('$TIMEOUT')*time.Second);if e,ok:=e.(*net.OpError);ok && e.Timeout(){os.Exit(1)};if e!=nil{os.Exit(1)};defer c.Close()}' > "$package" && "$method" run "$package" 2>/dev/null
             fi
             ;;
 
         "dart")
-            local package="cwait_$host$port.dart"
+            Generate_Exec_Package "$method$host$port"
+            local package="$EXEC_PACKAGE.dart"
             if [ -s "$package" ]; then
                 "$method" "$package" 2>/dev/null
             else
-                echo 'import "dart:io";void main(){new Future.delayed(new Duration(seconds:2),(){exit(1);});Socket.connect("'$host'",'$port').then((socket){socket.destroy();exit(0);}).catchError((e){exit(1);});}' > "$package" && "$method" "$package" 2>/dev/null
+                echo 'import "dart:io";void main(){new Future.delayed(new Duration(seconds:'$TIMEOUT'),(){exit(1);});Socket.connect("'$host'",'$port').then((socket){socket.destroy();exit(0);});}' > "$package" && "$method" "$package" 2>/dev/null
             fi
             ;;
 
         "dmd")
-            local package="$(echo "cwait_$host$port" | sed 's/\./dot/g').d"
-            local exec_package=$(echo "cwait_d_$host$port" | sed 's/\./dot/g')
-            if [ -s "$exec_package" ]; then
-                ./"$exec_package" 2>/dev/null
+            Generate_Exec_Package "$method$host$port"
+            local package="$EXEC_PACKAGE.d"
+            if [ -s "$EXEC_PACKAGE" ]; then
+                ./"$EXEC_PACKAGE" 2>/dev/null
             else
-                echo 'import std.socket;import std.datetime;int main(){auto s=new Socket(AddressFamily.INET,SocketType.STREAM,ProtocolType.TCP);s.setOption(SocketOptionLevel.SOCKET,SocketOption.SNDTIMEO,2.seconds);scope(exit){s.close();}try{auto addresses=getAddress("'$host'",'$port');s.connect(addresses[0]);return(0);}catch(SocketException){return(1);}}' > "$package" && "$method" -of="$exec_package" "$package" >/dev/null 2>&1 && ./"$exec_package" 2>/dev/null
+                echo 'import std.socket;import std.datetime;void main(){auto s=new Socket(AddressFamily.INET,SocketType.STREAM,ProtocolType.TCP);s.setOption(SocketOptionLevel.SOCKET,SocketOption.SNDTIMEO,'$TIMEOUT'.seconds);scope(exit){s.close();}auto addresses=getAddress("'$host'",'$port');s.connect(addresses[0]);}' > "$package" && "$method" -of="$EXEC_PACKAGE" "$package" >/dev/null 2>&1 && ./"$EXEC_PACKAGE" 2>/dev/null
             fi
             ;;
 
         "nim")
-            local package="$(echo "cwait_$host$port" | sed 's/\./dot/g').nim"
-            local exec_package=$(echo "cwait_nim_$host$port" | sed 's/\./dot/g')
-            if [ -s "$exec_package" ]; then
-                ./"$exec_package" 2>/dev/null
+            Generate_Exec_Package "$method$host$port"
+            local package="$EXEC_PACKAGE.nim"
+            if [ -s "$EXEC_PACKAGE" ]; then
+                ./"$EXEC_PACKAGE" 2>/dev/null
             else
-                # DO NOT TOUCH
-                printf "%s\n" "from threadpool import spawn;from os import sleep;import net;" "proc sum():void=" "    let s:Socket=newSocket();try:" "        s.connect(\"$host\",Port($port));s.close();system.quit(QuitSuccess);" "    except:" "        system.quit(QuitFailure);" "spawn sum();sleep(2000);system.quit(QuitFailure);" > "$package" && "$method" c --run --opt:speed --threads:on -d:release -o:"$exec_package" "$package" >/dev/null 2>&1
+                printf "%s\n" "from threadpool import spawn;from os import sleep;import net;" "proc sum():void=" "    let s:Socket=newSocket();s.connect(\"$host\",Port($port));s.close();system.quit(QuitSuccess);" "spawn sum();sleep("$TIMEOUT"000);system.quit(QuitFailure);" > "$package" && "$method" c --opt:speed --threads:on -d:release -o:"$EXEC_PACKAGE" "$package" >/dev/null 2>&1 && ./"$EXEC_PACKAGE" 2>/dev/null
+            fi
+            ;;
+
+        "ocaml")
+            Generate_Exec_Package "$method$host$port"
+            local package="$EXEC_PACKAGE.ml"
+            if [ -s "$package" ]; then
+                "$method" unix.cma "$package" 2>/dev/null
+            else
+                echo 'open Unix;;let ad=ADDR_INET((gethostbyname "'$host'").h_addr_list.(0),'$port') in let s=socket PF_INET SOCK_STREAM 0 in setsockopt_float s SO_SNDTIMEO '$TIMEOUT'.0;connect s ad;shutdown s SHUTDOWN_ALL' > "$package" && "$method" unix.cma "$package" 2>/dev/null
             fi
             ;;
 
         "dotnet")
-            local project="cwait_csharp.csproj"
+            local project="$method.csproj"
             if ! [ -s "$project" ]; then echo '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><TargetFramework>netcoreapp2.1</TargetFramework></PropertyGroup></Project>' > "$project"; fi
-            echo 'using System.Net.Sockets;using static System.Environment;namespace TestPort{class TestPort{static void Main(){Socket s=new Socket(AddressFamily.InterNetwork,SocketType.Stream,ProtocolType.Tcp);s.BeginConnect("'$host'",'$port',null,null).AsyncWaitHandle.WaitOne(2000,true);if (s.Connected){s.Close();Exit(0);}else Exit(1);}}}' > cwait_csharp.cs && "$method" run -c cwait >/dev/null 2>&1
+            echo 'using System.Net.Sockets;using static System.Environment;namespace T{class T{static void Main(){Socket s=new Socket(AddressFamily.InterNetwork,SocketType.Stream,ProtocolType.Tcp);s.BeginConnect("'$host'",'$port',null,null).AsyncWaitHandle.WaitOne('$TIMEOUT'000,true);if(s.Connected)s.Close();else Exit(1);}}}' > "$method.cs" && "$method" run -c cwait >/dev/null 2>&1
             ;;
 
         *)
@@ -368,8 +458,7 @@ Check_Methods()
     USED_METHOD=""
 
     # Test methods for open-connection
-    for method in $METHODS
-    do
+    for method in $METHODS; do
         if command -v "$method" >/dev/null; then
             USED_METHOD="[$method]"
             # Call function to try-connect using the selected method
@@ -385,22 +474,20 @@ Check_Methods()
 
 Main()
 {
-    # Optimize args + call function to validate args
-    local args="$(echo $@ | tr '[:upper:]' '[:lower:]' | sed 's/,/ /g')"
-    Validate_Args $args
-
     # Call function to check for missing files and make some configurations
     Check_Missing_Files_AND_Make_Config
 
-    local r_counter=1
-    local retries_count=$(echo "$RETRIES_COUNT" | sed 's/infinity/-1/')
+    # Optimize args + call function to validate args
+    local args="$(echo $@ | tr '[:upper:]' '[:lower:]' | sed 's/,/ /g')"
+    Validate_Args $args
 
     # INIT message
     if [ -n "$INIT_MESSAGE" ]; then echo "[*] [$(date +%T)] $INIT_MESSAGE [hosts: '$HOSTS' # connection-mode: '$CONNECT_MODE' # sleep: '$SLEEP_TIME' second(s) # max-retries: '$RETRIES_COUNT' # quiet-mode: '$IS_QUIET_MODE'] ..."; fi
 
     # Loop while checking for open connections
-    while [ $r_counter -ne $((retries_count+1)) ]
-    do
+    local retries_count=$(echo "$RETRIES_COUNT" | sed 's/infinity/-1/')
+    local r_counter=1
+    while [ $r_counter -ne $((retries_count+1)) ]; do
         local success=""
         sleep "$((SLEEP_TIME-1))"
         if [ -n "$FAIL_MESSAGE" ] && [ "$IS_QUIET_MODE" != "true" ]; then echo; echo "[*] [$(date +%T)] 'c_wait' - tries ($r_counter/$RETRIES_COUNT) ..."; fi
@@ -436,29 +523,28 @@ Main()
 
 Check_Missing_Files_AND_Make_Config()
 {
-    # If grep is not exist -> UNSUPPORTED SYSTEM message : terminate app
+    # If grep is not exist or incompatible version -> UNSUPPORTED SYSTEM message : terminate app
     if ! command -v "grep" >/dev/null; then echo; echo "[x] [$(date +%T)] 'c_wait' - Failed to initialize :( Missing system file: 'grep' or not linked correctly."; Terminated; fi
+    # Disable grep on Solaris (old grep is not good enough for this script)
+    if grep -v 2>&1 | grep "pattern file \." >/dev/null; then echo; echo "[x] [$(date +%T)] 'c_wait' - Failed to initialize :( System file: 'grep' is incompatible for this script."; Terminated; fi
 
     # Organize methods (no duplicates)
     METHODS=$(echo "$METHODS" | tr ' ' '\n' | awk '!x[$0]++' | tr '\n' ' ')
 
     TIMEOUT_CMD="" # Global
     if command -v "timeout" >/dev/null; then
-        # The timeout options (timeout / timeout -t)
-        TIMEOUT_CMD=$(timeout --version 2>&1 | head -2 | grep -io "\<busybox\>")
-        if [ -z "$TIMEOUT_CMD" ]; then TIMEOUT_CMD="timeout 2"; else TIMEOUT_CMD="timeout -t 2"; fi
+        # The timeout options ('timeout' is for the standard / GNU version, 'timeout -t' is for the old version of BusyBox)
+        TIMEOUT_CMD=$(timeout --version 2>&1 | head -2 | grep -io "\-t secs")
+        if [ -z "$TIMEOUT_CMD" ]; then TIMEOUT_CMD="timeout -s 2 $TIMEOUT"; else TIMEOUT_CMD="timeout -t $TIMEOUT -s 2"; fi
     elif command -v "gtimeout" >/dev/null; then
-        # macOS gtimeout
-        TIMEOUT_CMD="gtimeout 2"
+        # Old macOS 'gtimeout'
+        TIMEOUT_CMD="gtimeout -s 2 $TIMEOUT"
     else
         # If timeout is not exist -> show a warning and move the affected methods to the bottom of the priority (last to be checked)
-        local timeout_methods="bash telnet Rscript gawk"
+        local timeout_methods="bash ssh telnet openssl gawk zsh mongo Rscript"
         if [ "$IS_QUIET_MODE" != "true" ]; then echo "[-] [$(date +%T)] 'c_wait' - Missing system file: 'timeout'. This might lower the performance of the following methods: '$timeout_methods'."; fi
         for move_method in $timeout_methods; do METHODS=$(echo "$METHODS" | sed 's/'$move_method'\(.*\)/\1 '$move_method'/'); done
     fi
-
-    # Validate telnet & wget versions (BusyBox version is supported)
-    for busybox_method in "telnet" "wget"; do if [ -n "$($busybox_method --help 2>&1 | head -1 | grep -io '\<busybox\>')" ]; then METHODS=$(echo "$METHODS" | sed 's/'$busybox_method'//g'); fi; done
 
     # Validate javac & gcc & clang if they are installed properly (for macOS)
     if [ -n "$(javac --version 2>&1 | grep -io 'no java')" ]; then METHODS=$(echo "$METHODS" | sed 's/javac//g'); fi
@@ -466,15 +552,16 @@ Check_Missing_Files_AND_Make_Config()
 
     # Check and change to writable tmp directory to store the compiled files
     local writable_dir=""
-    for w_dir in "/tmp" "/var/tmp" "/usr/tmp" "/var/lock" "$(pwd)"; do if [ -w "$w_dir" ]; then writable_dir="$w_dir"; cd "$w_dir" >/dev/null; rm -rf cwait_* obj bin/cwait*; break; fi; done
+    for w_dir in "/tmp" "/var/tmp" "/usr/tmp" "/usr/local/tmp" "/dev/shm" "/var/lock" "$(pwd)"; do if [ -w "$w_dir" ]; then writable_dir="$w_dir"; cd "$w_dir" >/dev/null; rm -rf cwait_* obj bin/cwait*; break; fi; done
 
     # Check if there is no writable directory then disable some methods (related to compilations)
     if [ -z "$writable_dir" ]; then
-        local compilation_methods="gcc clang javac elixirc rustc go dart dmd nim dotnet"
+        local compilation_methods="gcc clang elixirc javac rustc go dart dmd nim ocaml dotnet"
         if [ "$IS_QUIET_MODE" != "true" ]; then echo "[-] [$(date +%T)] 'c_wait' - Insufficient folders permission. The following methods will be disabled: '$compilation_methods'."; fi
         for disable_method in $compilation_methods; do METHODS=$(echo "$METHODS" | awk '{for(o=1;o<=NF;o++)if($o=="'$disable_method'")$o=""}1'); done
     fi
 }
+
 
 
 Main -c "$CONNECT_MODE" -s "$SLEEP_TIME" -r "$RETRIES_COUNT" $@
