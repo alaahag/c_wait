@@ -172,6 +172,7 @@ python3 manage.py runserver 0.0.0.0:8000
 --------------------
 
 <h3>Considered but not added:</h3>  
+
 ```
 * GNAT(Ada) + GFortran -> Because it comes with GCC, and the GCC is faster.  
 * Scheme + Common Lisp + Haskell + Gforth -> Need to install some extra packages / libraries.  
