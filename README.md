@@ -172,13 +172,13 @@ python3 manage.py runserver 0.0.0.0:8000
 --------------------
 
 <h3>Considered but not added:</h3>  
-<b>GNAT(Ada) + GFortran</b> -> Because it comes with GCC, and the GCC is faster.  
-<b>Scheme + Common Lisp + Haskell + Gforth</b> -> Need to install some extra packages / libraries.  
-<b>Swift</b> -> We have Clang, and it runs faster than it.  
-<b>Kotlin</b> -> We have a JAVA-JDK and it runs faster than it.  
+<b>GNAT(Ada) + GFortran</b> = Because it comes with GCC, and the GCC is faster.  
+<b>Scheme + Common Lisp + Haskell + Gforth</b> = Need to install some extra packages / libraries.  
+<b>Swift</b> = We have Clang, and it runs faster than it.  
+<b>Kotlin</b> = We have a JAVA-JDK and it runs faster than it.  
 
-<b>MySQL</b> -> We might consider adding it (there's a small problem with timeout).  
-<b>PostgreSQL</b> -> We might consider adding it (there's a small problem with timeout).  
+<b>MySQL</b> = We might consider adding it (there's a small problem with timeout).  
+<b>PostgreSQL</b> = We might consider adding it (there's a small problem with timeout).  
 
 --------------------
 
