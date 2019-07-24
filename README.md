@@ -14,12 +14,12 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 <h3>What's new in v1.2:</h3>  
 
 * Added a new option to display all supported and installed methods (./c_wait.sh -i).  
-* Support for BusyBox version of Telnet + Wget.  
-* Added more testing-methods (SSH, MongoDB-Client, Groovy, Zsh, Ocaml).  
+* Full support for <b>BusyBox</b> version of <b>Telnet</b> and <b>Wget</b>.  
+* Added more testing-methods (<b>SSH, MongoDB-Client, Groovy, Zsh, Ocaml</b>).  
 * Fixed bugs.  
 * Optimized methods and performance.  
 * Optimzed code.  
-* Deleted Ada (GNAT) method (not needed because it comes with GCC, and the GCC runs faster).  
+* Deleted <b>GNAT(Ada)</b> method (not needed because it comes with <b>GCC</b>, and the <b>GCC</b> runs faster).  
 
 --------------------
 
