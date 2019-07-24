@@ -13,7 +13,7 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 <h3>What's new in v1.2:</h3>  
 
-* Added a new option to display all supported and installed methods (./c_wait.sh -i).  
+* Added a new option to display all supported and installed methods: [ ./c_wait.sh --installed ].  
 * Full support for <b>BusyBox</b> version of <b>Telnet</b> and <b>Wget</b>.  
 * Added more testing-methods (<b>SSH, MongoDB-Client, Groovy, Zsh, Ocaml</b>).  
 * Fixed bugs.  
