@@ -3,7 +3,7 @@
 <h3>Intro:</h3>  
 
 'c_wait' is a PT and DevOps tool.  
-The script will keep checking for open-connections for X hosts/ports.  
+The script will keep checking for open-connections for hosts/ports [args].  
 When the task is complete: the script will exit successfully (or else it will exit with failure).  
 
 <h3>Where can I use this script?</h3>  
