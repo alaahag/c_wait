@@ -27,14 +27,14 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 * Optimized for Kubernetes and Docker images (including full support for the most popular OS-images: <b>Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage</b> and <b>openSUSE</b>).  
 * In addition, support for: <b>BusyBox, Termux, macOS, RedHat, SUSELinux, ArchLinux, Mageia, GentooLinux, Endless and other Linux distributions</b>.  
-* Supporting various health-check methods, to check for open-connections.  
+* Supporting over 37 health-check methods, to check for open-connections.  
 * Allow adding unlimited number of hosts.  
 * Allow connection-mode:  
   @ 'all' hosts must be connected to complete the task.  
   @ 'any' of the hosts must be connected to complete the task.  
 * Allow limited/infinity connection-retries.  
-* You can view the installed and supported methods on X machine.
-* Custom methods and messages (easily editable from global values below).  
+* Option to display the installed and supported methods on host machine.
+* Custom methods and messages (easily editable from global values).  
 * Simple, user-friendly and easy to use.  
 
 * Methods (health-check) tests-order:  
