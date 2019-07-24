@@ -172,14 +172,14 @@ python3 manage.py runserver 0.0.0.0:8000
 
 --------------------
 
-<h3>Considered but not added (why):</h3>  
+<h3>Considered but not added:</h3>  
 
 ```
-* GNAT(Ada) + GFortran -> Because it comes with GCC, and the GCC is faster.  
-* Scheme + Common Lisp + Haskell + Gforth -> Need to install some extra packages / libraries.  
-* Swift -> We have Clang, and Swift runs slower than it.  
-* Kotlin -> We have a JAVA-JDK, and Kotlin runs slower than it.  
-* MySQL + PostgreSQL -> We might consider adding them (there's a small problem with timeout).  
+* GNAT(Ada) + GFortran -> It comes installed with GCC, and the GCC is runs better (performance).  
+* Scheme + Common Lisp + Haskell + Gforth -> Need to install some extra packages / libraries (not good for us).  
+* Swift -> We have the Clang, and Swift depends on it, runs slower.  
+* Kotlin -> We have the JAVA-JDK, and Kotlin depends on it, runs slower.  
+* MySQL + PostgreSQL and more databases -> We will consider adding them soon ;)  
 ```
 
 --------------------
