@@ -1,52 +1,51 @@
 #!/bin/sh
 
-# 'c_wait' ConnectionWait v1.2
+# 'c_wait' ConnectionWait v1.3
 # Author: Alaa H.J <MasterX>
 
-
+# ----------------------------------------------
+# ------ Default global values [not args] ------
+# ----------------------------------------------
 # DO NOT TOUCH THE METHODS BELOW IF YOU DON'T KNOW WHAT YOU'RE DOING!
-# Methods order (health-check) [if X method exists and installed on this machine] (you can change the methods order, or if you want to disable/enable some methods):
-METHODS="nc ssh python python3 bash curl wget telnet socat node ruby perl php tclsh openssl gawk ncat nmap zsh mongo erl clojure groovy scala Rscript pwsh gcc clang elixirc javac rustc go dart dmd nim ocaml dotnet"
-# Netcat, SSH, Python, Python3, Bash, cURL, Wget, Telnet, Socat, NodeJS, Ruby, Perl, PHP, Tcl, OpenSSL, Gawk, Ncat, Nmap, Zsh, MongoDB-Client, Erlang, Clojure, Groovy, Scala, R, PowerShell, GCC, Clang, Elixir, Java-JDK, Rust, Go, Dart, D, Nim, OCaml, .NET
+# Methods; health-check order [if method is not exist or not-supported then it will try the next method] (you can change the methods order, or disable/enable some methods):
+METHODS="nc bash ssh curl wget telnet gawk zsh ncat nmap socat python python3 node ruby perl php tclsh openssl scala cqlsh mongo groovy Rscript erl clojure racket guile julia pwsh gcc clang elixirc javac rustc go dart dmd nim ocaml dotnet"
+# Netcat, Bash, SSH, cURL, Wget, Telnet, Gawk, Zsh, Ncat, Nmap, Socat, Python, Python3, NodeJS, Ruby, Perl, PHP, Tcl, OpenSSL, Scala, CQL-shell, Mongo-shell, Groovy, R, Erlang, Clojure, Racket, Guile, Julia, PowerShell, GCC, Clang, Elixir, Java-JDK, Rust, Go, Dart, D, Nim, OCaml, .NET
 
-# Default global values [args]:
-HOSTS="8.8.8.8:53 db:3306" # IPs / HostNames.           Example: db:3306,db2:5432,0.0.0.0,google.com [default *:80]
-SLEEP_TIME="3" # Sleep for X seconds.
-RETRIES_COUNT="inf" # Max-retries for health-check.     '0' | 'inf' | 'infinity': For infinity connection-retries.
-CONNECT_MODE="all" # Options: 'all' / 'any'.            'all': It will pass if all selected hosts are connected. | 'any': It will pass if any of the selected hosts are connected.
-IS_QUIET_MODE="false" # Options: 'true' / 'false'.      Hide / show output messages (but always alert when the app is about to get started or terminated).
-
-# Timeout [not arg] (You can modify the connection-timeout if you have a very slow internet connection [default: '2' seconds]):
-TIMEOUT="2"
+TIMEOUT="2" # Modify the connection-timeout if you have a very slow internet connection [default: '2' second(s)].
 
 # Custom messages:
-readonly INIT_MESSAGE="'c_wait' - Initializing" # Show a custom message when app is about to get started (you can clear the text to suppress this message).
-readonly CONNECT_MESSAGE="'c_wait' - Connection Succeed!" # Show a custom message when successfully connected to the host (you can clear the text to suppress this message).
-readonly FAIL_MESSAGE="'c_wait' - Connection Failed!" # Show a custom message when failed connecting to the host (you can clear the text to suppress this message).
-readonly DONE_MESSAGE="'c_wait' - Task Completed :)" # Show a custom message when app is about to get terminated after successfully connected to the hosts (you can clear the text to suppress this message).
+readonly INIT_MESSAGE="'c_wait' - Initializing ..." # Show a custom output when the script is about to get started (you can clear the text to suppress this output).
+readonly CONNECT_MESSAGE="'c_wait' - Connection Succeed!" # Show a custom output when successfully connected to the host (you can clear the text to suppress this output).
+readonly FAIL_MESSAGE="'c_wait' - Connection Failed!" # Show a custom output when failed connecting to the host (you can clear the text to suppress this output).
+readonly DONE_MESSAGE="'c_wait' - Task Completed :)" # Show a custom output when the script is finished and successfully connected to the hosts (you can clear the text to suppress this output).
+readonly QUIT_MESSAGE="'c_wait' - Terminated!" # Show a custom output when the script is about to get terminated after failure or interrupt (you can clear the text to suppress this output).
+# ------------------------------------------
 
-
-Terminated()
-{
-    echo "('c_wait' terminated)"
-    exit 1
-}
+# ------------------------------------------
+# ------ Default global values [args] ------
+# ------------------------------------------
+HOSTS="8.8.8.8:53 db:3306" # IPs / HostNames.           Example: db:3306,db2:5432,0.0.0.0,google.com [default: *:80].
+SLEEP_TIME="3" # Sleep (wait) for X seconds.
+RETRIES_COUNT="0" # Max-retries for health-check.       Type '0' | 'forever' | 'inf' | 'infinity': for infinity connection-retries.
+CONNECT_MODE="all" # Options: 'all' / 'any'.            Type 'all' to verify that all selected hosts are connected. | 'any': to verify that any of the selected hosts is connected.
+IS_QUIET_MODE="no" # Options: 'yes' / 'no'.             Hide / show outputs (but always alerts you when the script is about to get started or terminated).
+# ------------------------------------------
 
 
 Usage()
 {
-    echo "[ 'c_wait' - ConnectionWait v1.2 ]"
+    echo "[ 'c_wait' - ConnectionWait v1.3 ]"
     echo
     echo "Usage:"
     echo "  $0 --connect <'all'/'any'>"
-    echo "     --sleep <secs> --retry <num/'inf'>"
+    echo "     --sleep <secs> --retry <num/'forever'>"
     echo "     <hosts:ports ...>"
     echo
     echo "Examples:"
     echo "  $0 --sleep 4 ftp:21 192.168.1.1:22"
     echo "  $0 --quiet -s 10 -r 3 myserver:8000"
     echo "  $0 -c any -q localhost myftp:21"
-    echo "  $0 --connect all --retry 4 srv:86"
+    echo "  $0 --connect all --retry 4 tln:25"
     echo
     echo "Options and default values:"
     echo "  <hosts:ports ...>"
@@ -58,13 +57,13 @@ Usage()
     echo "  -s | --sleep <seconds>"
     echo "     ('$SLEEP_TIME' seconds)"
     echo
-    echo "  -r | --retry <number/'infinity'>"
-    echo "     ('$RETRIES_COUNT' connection-retries)"
+    echo "  -r | --retry <number/'forever'>"
+    echo "     (connection-retries: '$RETRIES_COUNT')"
     echo
     echo "  -q | --quiet"
     echo "     (minimal output? '$IS_QUIET_MODE')"
     echo
-    echo "Info:"
+    echo "Display info:"
     echo "  -i | --installed"
     echo "     (display installed methods)"
     echo
@@ -82,37 +81,46 @@ Help()
 }
 
 
+Terminated()
+{
+    if [ -n "$QUIT_MESSAGE" ]; then echo "[x] [$(date +%T)] $QUIT_MESSAGE"; fi
+    exit 1
+}
+
+
 Print_Installed_Methods()
 {
     echo "[*] Installed and supported methods:"
     for method in $METHODS; do
         if command -v "$method" >/dev/null; then
             case $method in
-                nc) printf "Netcat "            ;;
-                ssh) printf "SSH "              ;;
-                curl) printf "cURL "            ;;
-                node) printf "NodeJS "          ;;
-                php) printf "PHP "              ;;
-                tclsh) printf "Tcl "            ;;
-                openssl) printf "OpenSSL "      ;;
-                mongo) printf "MongoDB-Client " ;;
-                erl) printf "Erlang "           ;;
-                Rscript) printf "R "            ;;
-                pwsh) printf "PowerShell "      ;;
-                gcc) printf "GCC "              ;;
-                elixirc) printf "Elixir "       ;;
-                javac) printf "Java-JDK "       ;;
-                rustc) printf "Rust "           ;;
-                dmd) printf "D "                ;;
-                ocaml) printf "OCaml "          ;;
-                dotnet) printf ".NET "          ;;
+                "nc") printf "Netcat"              ;;
+                "ssh") printf "SSH"                ;;
+                "curl") printf "cURL"              ;;
+                "node") printf "NodeJS"            ;;
+                "php") printf "PHP"                ;;
+                "tclsh") printf "Tcl"              ;;
+                "openssl") printf "OpenSSL"        ;;
+                "cqlsh") printf "CQL-shell"        ;;
+                "mongo") printf "Mongo-shell"      ;;
+                "Rscript") printf "R"              ;;
+                "erl") printf "Erlang"             ;;
+                "pwsh") printf "PowerShell"        ;;
+                "gcc") printf "GCC"                ;;
+                "elixirc") printf "Elixir"         ;;
+                "javac") printf "Java-JDK"         ;;
+                "rustc") printf "Rust"             ;;
+                "dmd") printf "D"                  ;;
+                "ocaml") printf "OCaml"            ;;
+                "dotnet") printf ".NET"            ;;
                 *)
                     # Else, capitalize first letter and print
                     local fLetter=$(echo $method | cut -c1 | tr [a-z] [A-Z])
                     local restLetters=$(echo $method | cut -c2-)
-                    printf "$fLetter$restLetters "
+                    printf "$fLetter$restLetters"
                     ;;
             esac
+            printf " "
         fi
     done
     echo; exit 1
@@ -133,8 +141,7 @@ Validate_Args()
                     CONNECT_MODE="$param2"
                     shift 2
                 else
-                    echo "[x] [$(date +%T)] 'c_wait' - Invalid --connect [value] (value must be 'all' or 'any')!"
-                    # Call function to display usage and terminate app
+                    echo "[x] [$(date +%T)] 'c_wait' - Invalid: --connect '$param2' (must be 'all' or 'any')!"
                     Help
                 fi
                 ;;
@@ -144,7 +151,7 @@ Validate_Args()
                     SLEEP_TIME="$param2"
                     shift 2
                 else
-                    echo "[x] [$(date +%T)] 'c_wait' - Invalid: --sleep [value] (value must be a number)!"
+                    echo "[x] [$(date +%T)] 'c_wait' - Invalid: --sleep '$param2' (must be greater than or equal to 0)!"
                     Help
                 fi
                 ;;
@@ -153,22 +160,21 @@ Validate_Args()
                 if echo "$param2" | grep -Eo '^([1-9][0-9]{1,4}|[1-9])$' >/dev/null; then
                     RETRIES_COUNT="$param2"
                     shift 2
-                elif echo "$param2" | grep -Eo '^(0|inf|infinity)$' >/dev/null; then
-                    RETRIES_COUNT="infinity"
+                elif echo "$param2" | grep -Eo '^(0|forever|inf|infinity)$' >/dev/null; then
+                    RETRIES_COUNT="forever"
                     shift 2
                 else
-                    echo "[x] [$(date +%T)] 'c_wait' - Invalid: --retries [value] (value must be a number or 'inf'|'infinity')!"
+                    echo "[x] [$(date +%T)] 'c_wait' - Invalid: --retry '$param2' (must be greater than or equal to 0 ['0' means forever])!"
                     Help
                 fi
                 ;;
 
             -q|--quiet)
-                IS_QUIET_MODE="true"
+                IS_QUIET_MODE="yes"
                 shift
                 ;;
 
             -i|--installed)
-                # Call function to print installed and supported methods
                 Print_Installed_Methods
                 ;;
 
@@ -177,12 +183,12 @@ Validate_Args()
                 ;;
 
             -*)
-                echo "[x] [$(date +%T)] 'c_wait' - Invalid parameters: '$1'!"
+                echo "[x] [$(date +%T)] 'c_wait' - Invalid parameters: '$param1'!"
                 Help
                 ;;
 
             *)
-                # Hosts:Ports [default *:80]
+                # Hosts:Ports [default: *:80]
                 if echo "$param1" | grep -Eo "^[a-zA-Z0-9._-]+(:([1-9]{1}|[0-9]{2,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?$" >/dev/null; then
                     local temp_host=$(echo "$param1" | cut -d: -f1)
                     local temp_port=$(echo "$param1" | cut -d: -f2)
@@ -190,7 +196,7 @@ Validate_Args()
                     temp_hosts="$temp_hosts $temp_host:$temp_port"
                     shift
                 else
-                    echo "[x] [$(date +%T)] 'c_wait' - Invalid host values!"
+                    echo "[x] [$(date +%T)] 'c_wait' - Invalid host values: '$param1'!"
                     Help
                 fi
                 ;;
@@ -198,7 +204,7 @@ Validate_Args()
     done
 
     if [ -z "$temp_hosts" ]; then
-        # Missing hosts message : terminate app
+        # Missing hosts output : terminate app
         if [ -z "$HOSTS" ]; then echo "[x] [$(date +%T)] 'c_wait' - Missing hosts!"; Terminated; fi
         # Call function to recursively validate host values (if there are no args from input)
         Validate_Args $HOSTS
@@ -206,6 +212,8 @@ Validate_Args()
         # Remove trailing spaces
         HOSTS="$(echo "$temp_hosts" | awk '{$1=$1};1')"
     fi
+
+    if [ "$IS_QUIET_MODE" != "yes" ]; then IS_QUIET_MODE="no"; fi
 }
 
 
@@ -228,43 +236,58 @@ Method_On_Action()
             "$method" -zvw"$TIMEOUT" "$host" "$port" >/dev/null 2>&1
             ;;
 
-        "ssh")
-            local ssh_res=$($TIMEOUT_CMD "$method" -o BatchMode=yes -p "$port" "$host" 2>&1 | grep -iEo "exchange_identification|Permission denied|verification failed")
-            if [ -n "$ssh_res" ]; then GOOD_CONNECT_RESULT="0"; fi
-            return
-            ;;
-
-        "python"|"python3")
-            "$method" -c 'exec("""\nimport socket;socket.setdefaulttimeout('$TIMEOUT');\nif socket.socket(socket.AF_INET,socket.SOCK_STREAM).connect(("'$host'",'$port'))==1:exit(1)\n""")' 2>/dev/null
-            ;;
-
         "bash")
             $TIMEOUT_CMD "$method" -c "echo >/dev/tcp/$host/$port" 2>/dev/null
             ;;
 
+        "ssh")
+            if $TIMEOUT_CMD "$method" -o BatchMode=yes -p "$port" "$host" 2>&1 | grep -iEo "exchange_identification|Permission denied|verification failed" >/dev/null; then GOOD_CONNECT_RESULT="0"; fi
+            return
+            ;;
+
         "curl")
-            case $("$method" -kI --connect-timeout "$TIMEOUT" "$host":"$port" 2>&1 | grep -Eo '\([0-9]+\)') in
+            case $("$method" -kI --connect-timeout "$TIMEOUT" "$host":"$port" 2>&1 | grep -Eo "\([0-9]+\)") in
                 ""|"(8)"|"(52)"|"(56)")
                     GOOD_CONNECT_RESULT="0"
+                    return
                     ;;
             esac
             return
             ;;
 
         "wget")
-            local wget_res=$("$method" -t 1 --spider -S -T "$TIMEOUT" "$host":"$port" 2>&1 | grep -iEo "\<connected\>|\<header\>|\<response\>|http/")
-            if [ -n "$wget_res" ]; then GOOD_CONNECT_RESULT="0"; fi
+            if "$method" -t 1 --spider -S -T "$TIMEOUT" "$host":"$port" 2>&1 | grep -iEo "\<connected\>|\<header\>|\<response\>|http/" >/dev/null; then GOOD_CONNECT_RESULT="0"; fi
             return
             ;;
 
         "telnet")
-            local telnet_res=$($TIMEOUT_CMD "$method" "$host" "$port" </dev/null 2>/dev/null | grep -io "\<connected\>")
-            if [ -n "$telnet_res" ]; then GOOD_CONNECT_RESULT="0"; fi
+            if $TIMEOUT_CMD "$method" "$host" "$port" </dev/null 2>/dev/null | grep -io "\<connected\>" >/dev/null; then GOOD_CONNECT_RESULT="0"; fi
+            return
+            ;;
+
+        "gawk")
+            $TIMEOUT_CMD "$method" 'BEGIN {S="/inet/tcp/0/'$host'/'$port'";print |& S;x=close(S);exit x}' 2>/dev/null
+            ;;
+
+        "zsh")
+            $TIMEOUT_CMD "$method" -c "zmodload zsh/net/tcp;ztcp $host $port" 2>/dev/null
+            ;;
+
+        "ncat")
+            "$method" -w "$TIMEOUT" "$host" "$port" </dev/null 2>/dev/null
+            ;;
+
+        "nmap")
+            if "$method" --host-timeout "$TIMEOUT"000ms --open "$host" -p "$port" 2>&1 | grep -io "\<open\>" >/dev/null; then GOOD_CONNECT_RESULT="0"; fi
             return
             ;;
 
         "socat")
             "$method" /dev/null TCP4:"$host":"$port",connect-timeout="$TIMEOUT" >/dev/null 2>&1
+            ;;
+
+        "python"|"python3")
+            "$method" -c 'exec("""\nimport socket;socket.setdefaulttimeout('$TIMEOUT');\nif socket.socket(socket.AF_INET,socket.SOCK_STREAM).connect(("'$host'",'$port'))==1:exit(1)\n""")' 2>/dev/null
             ;;
 
         "node")
@@ -288,33 +311,31 @@ Method_On_Action()
             ;;
 
         "openssl")
-            local openssl_res=$($TIMEOUT_CMD "$method" s_client -connect "$host":"$port" </dev/null 2>/dev/null | head -1 | grep -io "\<connected\>")
-            if [ -n "$openssl_res" ]; then GOOD_CONNECT_RESULT="0"; fi
+            if $TIMEOUT_CMD "$method" s_client -connect "$host":"$port" </dev/null 2>/dev/null | head -1 | grep -io "\<connected\>" >/dev/null; then GOOD_CONNECT_RESULT="0"; fi
             return
             ;;
 
-        "gawk")
-            $TIMEOUT_CMD "$method" 'BEGIN {S="/inet/tcp/0/'$host'/'$port'";print |& S;x=close(S);exit x}' 2>/dev/null
+        "scala")
+            "$method" -e 'val s=new java.net.Socket();s.connect(new java.net.InetSocketAddress("'$host'",'$port'),'$TIMEOUT'000);s.close();' 2>/dev/null
             ;;
 
-        "ncat")
-            "$method" -w "$TIMEOUT" "$host" "$port" </dev/null 2>/dev/null
-            ;;
-
-        "nmap")
-            local nmap_res=$("$method" --host-timeout "$TIMEOUT"000ms --open "$host" -p "$port" 2>&1 | grep -io "\<open\>")
-            if [ -n "$nmap_res" ]; then GOOD_CONNECT_RESULT="0"; fi
+        "cqlsh")
+            local cqlsh_res="$("$method" --connect-timeout="$TIMEOUT" "$host" "$port" </dev/null 2>&1 | grep -Eo '[a-zA-Z]+')"
+            if [ -z "$cqlsh_res" ] || echo "$cqlsh_res" | grep -iEo "\<protocolerror\>|\<closed\>" >/dev/null; then GOOD_CONNECT_RESULT="0"; fi
             return
-            ;;
-
-        "zsh")
-            $TIMEOUT_CMD "$method" -c 'zmodload zsh/net/tcp;ztcp '$host' '$port'' 2>/dev/null
             ;;
 
         "mongo")
-            local mongo_res=$($TIMEOUT_CMD "$method" --host "$host" --port "$port" --verbose </dev/null 2>&1 | head -4 | grep -io "\<connected\>")
-            if [ -n "$mongo_res" ]; then GOOD_CONNECT_RESULT="0"; fi
+            if $TIMEOUT_CMD "$method" --host "$host" --port "$port" --verbose --norc </dev/null 2>&1 | head -4 | grep -io "\<connected\>" >/dev/null; then GOOD_CONNECT_RESULT="0"; fi
             return
+            ;;
+
+        "groovy")
+            "$method" -e 'Socket s=new Socket();s.connect(new InetSocketAddress("'$host'",'$port'),'$TIMEOUT'000);s.close()' 2>/dev/null
+            ;;
+
+        "Rscript")
+            $TIMEOUT_CMD "$method" -e 'options(warn=-2);{s<-socketConnection(host="'$host'",port='$port');close(s)}' 2>/dev/null
             ;;
 
         "erl")
@@ -322,19 +343,19 @@ Method_On_Action()
             ;;
 
         "clojure")
-            "$method" -e '(def s (java.net.Socket.)) (.connect s (java.net.InetSocketAddress. "'$host'" '$port')'$TIMEOUT'000)(.close s)' >/dev/null 2>&1
+            "$method" -e '(def s(java.net.Socket.))(.connect s(java.net.InetSocketAddress. "'$host'" '$port')'$TIMEOUT'000)(.close s)' >/dev/null 2>&1
             ;;
 
-        "groovy")
-            "$method" -e 'Socket s=new Socket();s.connect(new InetSocketAddress("'$host'",'$port'),'$TIMEOUT'000);s.close()' 2>/dev/null
+        "racket")
+            "$method" -e '(define w(thread(lambda()(sleep '$TIMEOUT')(exit 1))))(tcp-connect "'$host'" '$port')' >/dev/null 2>&1
             ;;
 
-        "scala")
-            "$method" -nobootcp -nc -e 'object T{def main(args:Array[String]){val s=new java.net.Socket();s.connect(new java.net.InetSocketAddress("'$host'",'$port'),'$TIMEOUT'000);s.close()}}' 2>/dev/null
+        "guile")
+            "$method" -q --no-debug -c '(use-modules(ice-9 threads))(call-with-new-thread(lambda()(sleep '$TIMEOUT')(primitive-exit 1)))(let([s(socket PF_INET SOCK_STREAM 0)][d(vector-ref(addrinfo:addr(car(getaddrinfo "'$host'")))1)])(connect s AF_INET d '$port')(close s))' >/dev/null 2>&1
             ;;
 
-        "Rscript")
-            $TIMEOUT_CMD "$method" -e 'options(warn=-2);{s<-socketConnection(host="'$host'",port='$port');close(s)}' 2>/dev/null
+        "julia")
+            "$method" -q -O 0 -e 'using Sockets;t=@async while true sleep('$TIMEOUT');exit(1);end;s=connect("'$host'",'$port');close(s)' >/dev/null 2>&1
             ;;
 
         "pwsh")
@@ -342,7 +363,7 @@ Method_On_Action()
             ;;
 
         "gcc"|"clang")
-            # Call function to generate exec filename into variable
+            # Call function to generate exec filename into variable: EXEC_PACKAGE
             Generate_Exec_Package "$method$host$port"
             local package="$EXEC_PACKAGE.c"
             if [ -s "$EXEC_PACKAGE" ]; then
@@ -438,7 +459,7 @@ Method_On_Action()
             echo 'using System.Net.Sockets;using static System.Environment;namespace T{class T{static void Main(){Socket s=new Socket(AddressFamily.InterNetwork,SocketType.Stream,ProtocolType.Tcp);s.BeginConnect("'$host'",'$port',null,null).AsyncWaitHandle.WaitOne('$TIMEOUT'000,true);if(s.Connected)s.Close();else Exit(1);}}}' > "$method.cs" && "$method" run -c cwait >/dev/null 2>&1
             ;;
 
-        *)
+        "*")
             echo "[x] [$(date +%T)] 'c_wait' - Method '$method' is not exist or not linked correctly!"
             Terminated
             ;;
@@ -461,58 +482,57 @@ Check_Methods()
     for method in $METHODS; do
         if command -v "$method" >/dev/null; then
             USED_METHOD="[$method]"
-            # Call function to try-connect using the selected method
+            # Call function to test connection using the selected method
             Method_On_Action "$method" "$host" "$port"
             break
         fi
     done
 
-    # UNSUPPORTED METHOD message : exit app if failed to identify any connection-methods
+    # UNSUPPORTED METHOD output : exit app if failed to identify any connection-methods
     if [ -z "$USED_METHOD" ]; then echo; echo "[x] [$(date +%T)] 'c_wait' - Failed to check for connections, Unable to locate any supported method :("; Terminated; fi
 }
 
 
 Main()
 {
-    # Call function to check for missing files and make some configurations
+    # Call function to check for missing files and make configurations
     Check_Missing_Files_AND_Make_Config
 
-    # Optimize args + call function to validate args
     local args="$(echo $@ | tr '[:upper:]' '[:lower:]' | sed 's/,/ /g')"
+    # Call function to optimize and validate args
     Validate_Args $args
 
-    # INIT message
-    if [ -n "$INIT_MESSAGE" ]; then echo "[*] [$(date +%T)] $INIT_MESSAGE [hosts: '$HOSTS' # connection-mode: '$CONNECT_MODE' # sleep: '$SLEEP_TIME' second(s) # max-retries: '$RETRIES_COUNT' # quiet-mode: '$IS_QUIET_MODE'] ..."; fi
+    # INIT output
+    if [ -n "$INIT_MESSAGE" ]; then printf "%s\n" "[*] [$(date +%T)] $INIT_MESSAGE" "" "[*] Hosts:           '$HOSTS'" "[*] Connection Mode: '$CONNECT_MODE' hosts" "[*] Sleep Time:      '$SLEEP_TIME' second(s)" "[*] Max Timeout:     '$TIMEOUT' second(s)" "[*] Max Retries:     '$RETRIES_COUNT'" "[*] Quiet Mode:      '$IS_QUIET_MODE'"; fi
 
     # Loop while checking for open connections
-    local retries_count=$(echo "$RETRIES_COUNT" | sed 's/infinity/-1/')
+    local retries_count=$(echo "$RETRIES_COUNT" | sed 's/forever/-1/')
     local r_counter=1
     while [ $r_counter -ne $((retries_count+1)) ]; do
         local success=""
+        if [ -n "$FAIL_MESSAGE" ] && [ "$IS_QUIET_MODE" = "no" ]; then echo; echo "[*] [$(date +%T)] 'c_wait' - tries: $r_counter/$RETRIES_COUNT ..."; fi
         sleep "$((SLEEP_TIME-1))"
-        if [ -n "$FAIL_MESSAGE" ] && [ "$IS_QUIET_MODE" != "true" ]; then echo; echo "[*] [$(date +%T)] 'c_wait' - tries ($r_counter/$RETRIES_COUNT) ..."; fi
 
         for host_n_port in $HOSTS; do
+            sleep 1
             # Call function to check for open connection
             Check_Methods "$host_n_port"
-            sleep 1
 
             if [ -n "$GOOD_CONNECT_RESULT" ]; then
-                # SUCCESS message
-                if [ -n "$CONNECT_MESSAGE" ] && [ "$IS_QUIET_MODE" != "true" ]; then echo "[+] [$(date +%T)] $USED_METHOD - $host_n_port - $CONNECT_MESSAGE"; fi
+                # SUCCESS output
+                if [ -n "$CONNECT_MESSAGE" ] && [ "$IS_QUIET_MODE" = "no" ]; then echo "[+] [$(date +%T)] $USED_METHOD - $host_n_port => $CONNECT_MESSAGE"; fi
                 success="0"
                 if [ "$CONNECT_MODE" = "any" ]; then break; fi
             else
-                # FAIL message
-                if [ -n "$FAIL_MESSAGE" ] && [ "$IS_QUIET_MODE" != "true" ]; then echo "[-] [$(date +%T)] $USED_METHOD - $host_n_port - $FAIL_MESSAGE"; fi
+                # FAIL output
+                if [ -n "$FAIL_MESSAGE" ] && [ "$IS_QUIET_MODE" = "no" ]; then echo "[-] [$(date +%T)] $USED_METHOD - $host_n_port => $FAIL_MESSAGE"; fi
                 success="1"
                 if [ "$CONNECT_MODE" = "all" ]; then break; fi
             fi
         done
 
-        # DONE message : exit app successfully
+        # DONE output : exit app successfully
         if [ "$success" = "0" ]; then if [ -n "$DONE_MESSAGE" ]; then echo; echo "[v] [$(date +%T)] $DONE_MESSAGE"; echo; fi; exit 0; fi
-
         r_counter=$((r_counter=r_counter+1))
     done
 
@@ -523,32 +543,43 @@ Main()
 
 Check_Missing_Files_AND_Make_Config()
 {
-    # If grep is not exist or incompatible version -> UNSUPPORTED SYSTEM message : terminate app
-    if ! command -v "grep" >/dev/null; then echo; echo "[x] [$(date +%T)] 'c_wait' - Failed to initialize :( Missing system file: 'grep' or not linked correctly."; Terminated; fi
+    # If grep is not exist or incompatible version -> UNSUPPORTED SYSTEM output : terminate app
+    if ! command -v "grep" >/dev/null; then echo; echo "[x] [$(date +%T)] 'c_wait' - Failed to initialize :( Missing system file: 'grep' or it is not linked correctly!"; Terminated; fi
     # Disable grep on Solaris (old grep is not good enough for this script)
-    if grep -v 2>&1 | grep "pattern file \." >/dev/null; then echo; echo "[x] [$(date +%T)] 'c_wait' - Failed to initialize :( System file: 'grep' is incompatible for this script."; Terminated; fi
+    if grep -v 2>&1 | grep "pattern file \." >/dev/null; then echo; echo "[x] [$(date +%T)] 'c_wait' - Failed to initialize :( System file: 'grep' is incompatible for this script!"; Terminated; fi
 
     # Organize methods (no duplicates)
     METHODS=$(echo "$METHODS" | tr ' ' '\n' | awk '!x[$0]++' | tr '\n' ' ')
 
     TIMEOUT_CMD="" # Global
+    # Check for invalid TIMEOUT value
+    if echo "$TIMEOUT" | grep -Eov '^([1-9][0-9]{1,4}|[1-9])$' >/dev/null; then
+        if [ "$IS_QUIET_MODE" = "no" ]; then echo "[-] [$(date +%T)] 'c_wait' - Invalid: TIMEOUT '$TIMEOUT'. Restored the default value back to '2' seconds."; TIMEOUT="2"; fi
+    fi
+
     if command -v "timeout" >/dev/null; then
         # The timeout options ('timeout' is for the standard / GNU version, 'timeout -t' is for the old version of BusyBox)
-        TIMEOUT_CMD=$(timeout --version 2>&1 | head -2 | grep -io "\-t secs")
+        TIMEOUT_CMD=$(timeout --version 2>&1 | head -4 | grep -io "\-t secs")
         if [ -z "$TIMEOUT_CMD" ]; then TIMEOUT_CMD="timeout -s 2 $TIMEOUT"; else TIMEOUT_CMD="timeout -t $TIMEOUT -s 2"; fi
     elif command -v "gtimeout" >/dev/null; then
         # Old macOS 'gtimeout'
         TIMEOUT_CMD="gtimeout -s 2 $TIMEOUT"
     else
         # If timeout is not exist -> show a warning and move the affected methods to the bottom of the priority (last to be checked)
-        local timeout_methods="bash ssh telnet openssl gawk zsh mongo Rscript"
-        if [ "$IS_QUIET_MODE" != "true" ]; then echo "[-] [$(date +%T)] 'c_wait' - Missing system file: 'timeout'. This might lower the performance of the following methods: '$timeout_methods'."; fi
+        local timeout_methods="bash ssh telnet gawk zsh openssl Rscript mongo"
+        if [ "$IS_QUIET_MODE" = "no" ]; then echo "[-] [$(date +%T)] 'c_wait' - Missing system file: 'timeout'. This might lower the performance of the following methods: '$timeout_methods'."; echo; fi
         for move_method in $timeout_methods; do METHODS=$(echo "$METHODS" | sed 's/'$move_method'\(.*\)/\1 '$move_method'/'); done
     fi
 
-    # Validate javac & gcc & clang if they are installed properly (for macOS)
-    if [ -n "$(javac --version 2>&1 | grep -io 'no java')" ]; then METHODS=$(echo "$METHODS" | sed 's/javac//g'); fi
-    for validate_mac_method in "gcc" "clang"; do if [ -n "$($validate_mac_method --help 2>&1 | grep -io 'developer tools')" ]; then METHODS=$(echo "$METHODS" | awk '{for(o=1;o<=NF;o++)if($o=="'$validate_mac_method'")$o=""}1'); fi; done
+    # Validate BusyBox's telnet version (old BusyBox 1.30.x and lower is not supported)
+    if telnet --help 2>&1 | head -1 | grep -iE "v1.2|v1.30" >/dev/null; then METHODS=$(echo "$METHODS" | sed 's/telnet//g'); fi
+
+    # Validate java if not installed properly (also for macOS) then disable: scala, groovy, clojure
+    if ! command -v "java" >/dev/null || java -version 2>&1 | grep -io 'no java' >/dev/null; then for validate_java_method in "scala" "groovy" "clojure"; do METHODS=$(echo "$METHODS" | sed 's/'$validate_java_method'//g'); done; fi
+
+    # Validate javac & gcc & clang if they are not installed properly (for macOS) then we disable them from options
+    if javac -version 2>&1 | grep -io 'no java' >/dev/null; then METHODS=$(echo "$METHODS" | sed 's/javac//g'); fi
+    for validate_mac_method in "gcc" "clang"; do if "$validate_mac_method" --help 2>&1 | grep -io 'developer tools' >/dev/null; then METHODS=$(echo "$METHODS" | awk '{for(o=1;o<=NF;o++)if($o=="'$validate_mac_method'")$o=""}1'); fi; done
 
     # Check and change to writable tmp directory to store the compiled files
     local writable_dir=""
@@ -557,11 +588,13 @@ Check_Missing_Files_AND_Make_Config()
     # Check if there is no writable directory then disable some methods (related to compilations)
     if [ -z "$writable_dir" ]; then
         local compilation_methods="gcc clang elixirc javac rustc go dart dmd nim ocaml dotnet"
-        if [ "$IS_QUIET_MODE" != "true" ]; then echo "[-] [$(date +%T)] 'c_wait' - Insufficient folders permission. The following methods will be disabled: '$compilation_methods'."; fi
+        if [ "$IS_QUIET_MODE" = "no" ]; then echo "[-] [$(date +%T)] 'c_wait' - Insufficient folders permission. The following methods will be disabled: '$compilation_methods'."; fi
         for disable_method in $compilation_methods; do METHODS=$(echo "$METHODS" | awk '{for(o=1;o<=NF;o++)if($o=="'$disable_method'")$o=""}1'); done
     fi
 }
 
 
+trap 'echo; Terminated; exit 1' INT
 
+# Call Main function (with args / default options)
 Main -c "$CONNECT_MODE" -s "$SLEEP_TIME" -r "$RETRIES_COUNT" $@
