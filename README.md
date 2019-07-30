@@ -101,9 +101,9 @@ CONNECT_MODE="all"
 IS_QUIET_MODE="no"  
 ```
 
-<h5>You can modify the default values (read the source-code comments).</h5>  
+<h4>You can modify the default values (read the source-code comments).</h4>  
 
-<h6>./c_wait --help</h6>  
+<h4>./c_wait --help</h4>  
 
 ```
 [ 'c_wait' - ConnectionWait v1.3 ]
