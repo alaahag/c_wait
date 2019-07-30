@@ -217,7 +217,7 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ### Considered but not added (methods): 
 
-> 1. _GNAT(Ada) + GFortran_ -> It comes installed with GCC, and the GCC is runs better (performance).  
+> 1. <h5>GNAT(Ada) + GFortran -> It comes installed with GCC, and the GCC is runs better (performance).</h5>  
 > 2. _Common Lisp + Haskell + Gforth_ -> Need to install some extra packages / libraries (not good for us).  
 > 3. _Swift_ -> We have the Clang, and Swift depends on it, runs slower.  
 > 4. _Kotlin_ -> We have the JAVA-JDK, and Kotlin depends on it, runs slower.  
