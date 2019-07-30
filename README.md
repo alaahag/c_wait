@@ -164,11 +164,11 @@ Display info:
 
 <h3>Issues:</h3>  
 
-<h5>Methods:</h5>
+<h4>Methods:</h4>
 
-- <h5>Mongo-shell</h5>: will not be able to connect to '0.0.0.0' (connection will fail).  
+- <h5>Mongo-shell</h5>Will not be able to connect to '0.0.0.0' (connection will fail).  
 
-<h5>Bugs:</h5>
+<h4>Bugs:</h4>
 
 - No known bugs.
 
