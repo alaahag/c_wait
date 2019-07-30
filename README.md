@@ -1,4 +1,4 @@
-# 'c_wait' - ConnectionWait v1.3
+## 'c_wait' - ConnectionWait v1.3
 
 ### Intro:  
 
@@ -46,7 +46,7 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 >8. Custom methods and messages (easily editable from global values).  
 >9. Simple, user-friendly and easy to use.  
 
-Methods (health-check) tests-order:  
+<h4>Methods (health-check) tests-order:</h4>  
 **Netcat**  
 **Bash**  
 **SSH**  
