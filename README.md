@@ -4,10 +4,12 @@
 
 **'c_wait'** is a PenetrationTesting and DevOps tool.  
 The script will keep checking for open-connections for hosts/ports [args].  
-When the task is complete: the script will exit successfully (or else it will exit with failure).  
+When the task is complete: It will exit successfully (or else it will exit with failure).  
 
-### Where can I use this script?  
-When you wanna initialize a server + DB (using Kubernetes or Docker for example), but you don't wanna let the server run before DB-connection (or else: the server will fail on initialization).  
+### Examples, Where can I use this script?  
+- You have installed some X servers + DBs using _Docker_, but you don't want to let the servers run before DB-connections up (or else: the server will fail on initialization).  
+- You have logged into a foreign system, And you want to "scan the area" with the current installed methods in that machine (to make no suspicious noise there).  
+- Security stuff, View the installed methods in X machine to get a clean vision of what could Hackers do inside your system.
 
 ---
 
