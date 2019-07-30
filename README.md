@@ -2,7 +2,7 @@
 
 ### Intro:  
 
-**'c_wait'** is a PenetrationTesting and DevOps tool [advanced health-check tool].  
+**'c_wait'** is a PenetrationTesting and DevOps tool **[an advanced health-check tool]**.  
 The script will keep checking for open-connections for hosts/ports [args].  
 When the task is complete: It will exit successfully (or else it will exit with failure).  
 
