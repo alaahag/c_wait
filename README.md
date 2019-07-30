@@ -7,9 +7,9 @@ The script will keep checking for open-connections for hosts/ports [args].
 When the task is complete: It will exit successfully (or else it will exit with failure).  
 
 ### Examples, Where can I use this script?  
-- <h4>You have installed some X servers + DBs using _Docker_, but you don't want to let the servers run before DB-connections up (or else: the server will fail on initialization).</h4>  
-- <h4>You have logged into a foreign system, And you want to "scan the area" with the current installed methods in that machine (to make no suspicious noise there).</h4>  
-- <h4>Security stuff, View the installed methods in X machine to get a clean vision of what could Hackers do inside your system.</h4>
+- <h5>You have installed some X servers + DBs using _Docker_, but you don't want to let the servers run before DB-connections up (or else: the server will fail on initialization).</h5>  
+- <h5>You have logged into a foreign system, And you want to "scan the area" with the current installed methods in that machine (to make no suspicious noise there).</h5>  
+- <h5>Security stuff, View the installed methods in X machine to get a clean vision of what could Hackers do inside your system.</h5>
 
 ---
 
