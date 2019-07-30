@@ -15,7 +15,7 @@ When the task is complete: It will exit successfully (or else it will exit with 
 
 <h4>Changelog v1.3:</h4>  
 
-- Added more testing-methods (_CQL-shell, Racket, Guile, Julia).  
+- Added more testing-methods (CQL-shell, Racket, Guile, Julia).  
 - Fixed bugs.  
 - Optimized methods.  
 - Optimized code.  
