@@ -22,7 +22,7 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 <h4>Changelog v1.2:</h4>  
 
-> Added a new option to display all supported and installed methods: [ ./c_wait.sh --installed ].  
+- Added a new option to display all supported and installed methods: [ ./c_wait.sh --installed ].  
 - Full support for the latest _BusyBox_ version of _Telnet_ and _Wget_.  
 - Added more testing-methods (_SSH, MongoDB-Client, Groovy, Zsh, Ocaml_).  
 - Fixed bugs.  
@@ -34,17 +34,17 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 ### Features:  
 
-- Optimized for _Kubernetes_ and _Docker_ images (including full support for the most popular OS-images: _Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage_ and _openSUSE_).  
-- In addition, support for: _BusyBox, Termux, macOS, RedHat, SUSELinux, ArchLinux, Mageia, GentooLinux, Endless, OpenBSD, FreeBSD, Solus, Guix, Slackware_ and other Linux distributions.  
-- Supporting over 41 health-check methods, to check for open-connections.  
-- Allow adding unlimited number of hosts.  
-- Allow connection-mode:  
+> Optimized for _Kubernetes_ and _Docker_ images (including full support for the most popular OS-images: _Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage_ and _openSUSE_).  
+> In addition, support for: _BusyBox, Termux, macOS, RedHat, SUSELinux, ArchLinux, Mageia, GentooLinux, Endless, OpenBSD, FreeBSD, Solus, Guix, Slackware_ and other Linux distributions.  
+> Supporting over 41 health-check methods, to check for open-connections.  
+> Allow adding unlimited number of hosts.  
+> Allow connection-mode:  
   @ 'all' hosts must be connected to complete the task.  
   @ 'any' of the hosts must be connected to complete the task.  
-- Allow limited/forever connection-retries.  
-- Option to display the installed and supported methods on host machine.  
-- Custom methods and messages (easily editable from global values).  
-- Simple, user-friendly and easy to use.  
+> Allow limited/forever connection-retries.  
+> Option to display the installed and supported methods on host machine.  
+> Custom methods and messages (easily editable from global values).  
+> Simple, user-friendly and easy to use.  
 
 * Methods (health-check) tests-order:  
 **Netcat**  
@@ -194,13 +194,11 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ### Considered but not added: 
 
-```
-* GNAT(Ada) + GFortran -> It comes installed with GCC, and the GCC is runs better (performance).  
-* Common Lisp + Haskell + Gforth -> Need to install some extra packages / libraries (not good for us).  
-* Swift -> We have the Clang, and Swift depends on it, runs slower.  
-* Kotlin -> We have the JAVA-JDK, and Kotlin depends on it, runs slower.  
-* MySQL + PostgreSQL -> the client version is not fully supported for all OSes.  
-```
+> GNAT(Ada) + GFortran -> It comes installed with GCC, and the GCC is runs better (performance).  
+> Common Lisp + Haskell + Gforth -> Need to install some extra packages / libraries (not good for us).  
+> Swift -> We have the Clang, and Swift depends on it, runs slower.  
+> Kotlin -> We have the JAVA-JDK, and Kotlin depends on it, runs slower.  
+> MySQL + PostgreSQL -> the client version is not fully supported for all OSes.  
 
 --------------------
 
