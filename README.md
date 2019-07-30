@@ -162,7 +162,7 @@ Display info:
     
 ---
 
-<h3>Known issues:</h3>  
+<h3>Issues:</h3>  
 
 <h5>Methods:</h5>
 
