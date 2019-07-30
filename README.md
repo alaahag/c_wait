@@ -164,7 +164,7 @@ Display info:
 
 <h3>Known issues:</h3>  
 
-- Mongo-shell: will not connect to all interfaces '0.0.0.0'.
+- Mongo-shell: will not connect to '0.0.0.0'.  
 
 --------------------
 
@@ -211,11 +211,11 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ### Considered but not added: 
 
-> GNAT(Ada) + GFortran -> It comes installed with GCC, and the GCC is runs better (performance).  
-> Common Lisp + Haskell + Gforth -> Need to install some extra packages / libraries (not good for us).  
-> Swift -> We have the Clang, and Swift depends on it, runs slower.  
-> Kotlin -> We have the JAVA-JDK, and Kotlin depends on it, runs slower.  
-> MySQL + PostgreSQL -> the client version is not fully supported for all OSes.  
+> 1. GNAT(Ada) + GFortran -> It comes installed with GCC, and the GCC is runs better (performance).  
+> 2. Common Lisp + Haskell + Gforth -> Need to install some extra packages / libraries (not good for us).  
+> 3. Swift -> We have the Clang, and Swift depends on it, runs slower.  
+> 4. Kotlin -> We have the JAVA-JDK, and Kotlin depends on it, runs slower.  
+> 5. MySQL + PostgreSQL -> the client version is not fully supported for all OSes.  
 
 --------------------
 
