@@ -13,8 +13,8 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 <h4>Changelog v1.3:</h4>  
 
->- Added more testing-methods (_CQL-shell, Racket, Guile, Julia, Ocaml_).  
->- Fixed bugs.  
+- Added more testing-methods (_CQL-shell, Racket, Guile, Julia, Ocaml_).  
+- Fixed bugs.  
 - Optimized methods.  
 - Optimized code.  
 - Typo and usage.  
@@ -34,17 +34,17 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 ### Features:  
 
-> Optimized for _Kubernetes_ and _Docker_ images (including full support for the most popular OS-images: _Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage_ and _openSUSE_).  
-> In addition, support for: _BusyBox, Termux, macOS, RedHat, SUSELinux, ArchLinux, Mageia, GentooLinux, Endless, OpenBSD, FreeBSD, Solus, Guix, Slackware_ and other Linux distributions.  
-> Supporting over 41 health-check methods, to check for open-connections.  
-> Allow adding unlimited number of hosts.  
-> Allow connection-mode:  
+>- Optimized for _Kubernetes_ and _Docker_ images (including full support for the most popular OS-images: _Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage_ and _openSUSE_).  
+>- In addition, support for: _BusyBox, Termux, macOS, RedHat, SUSELinux, ArchLinux, Mageia, GentooLinux, Endless, OpenBSD, FreeBSD, Solus, Guix, Slackware_ and other Linux distributions.  
+>- Supporting over 41 health-check methods, to check for open-connections.  
+>- Allow adding unlimited number of hosts.  
+>- Allow connection-mode:  
   @ 'all' hosts must be connected to complete the task.  
   @ 'any' of the hosts must be connected to complete the task.  
-> Allow limited/forever connection-retries.  
-> Option to display the installed and supported methods on host machine.  
-> Custom methods and messages (easily editable from global values).  
-> Simple, user-friendly and easy to use.  
+>- Allow limited/forever connection-retries.  
+>- Option to display the installed and supported methods on host machine.  
+>- Custom methods and messages (easily editable from global values).  
+>- Simple, user-friendly and easy to use.  
 
 * Methods (health-check) tests-order:  
 **Netcat**  
