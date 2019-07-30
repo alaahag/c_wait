@@ -42,9 +42,9 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
   @ 'all' hosts must be connected to complete the task.  
   @ 'any' of the hosts must be connected to complete the task.  
 >6. Allow limited/forever connection-retries.  
->.7. Option to display the installed and supported methods on host machine.  
->.8. Custom methods and messages (easily editable from global values).  
->.9. Simple, user-friendly and easy to use.  
+>7. Option to display the installed and supported methods on host machine.  
+>8. Custom methods and messages (easily editable from global values).  
+>9. Simple, user-friendly and easy to use.  
 
 <h4>Methods (health-check) tests-order:</h4>  
 **Netcat**  
