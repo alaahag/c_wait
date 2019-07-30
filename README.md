@@ -50,45 +50,45 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 1. _Netcat_  
 2. _Bash_  
-3. SSH  
-4. cURL  
-5. Wget  
-6. Telnet  
-7. Gawk  
-8. Zsh  
-9. Ncat  
-10. Nmap  
-11. Socat  
-12. Python  
-13. Python3  
-14. NodeJS  
-15. Ruby  
-16. Perl  
-17. PHP  
-18. Tcl  
-19. OpenSSL  
-20. Scala  
-21. CQL-shell  
-22. MongoDB-Client  
-23. Groovy  
-24. R  
-25. Erlang  
-26. Clojure  
-27. Racket  
-28. Guile  
-29. Julia  
-30. PowerShell  
-31. GCC  
-32. Clang  
-33. Elixir  
-34. Java-JDK  
-35. Rust  
-36. Go  
-37. Dart  
-38. D  
-39. Nim  
-40. OCaml  
-41. .NET  
+3. _SSH_  
+4. _cURL_  
+5. _Wget_  
+6. _Telnet_  
+7. _Gawk_  
+8. _Zsh_  
+9. _Ncat_  
+10. _Nmap_  
+11. _Socat_  
+12. _Python_  
+13. _Python3_  
+14. _NodeJS_  
+15. _Ruby_  
+16. _Perl_  
+17. _PHP_  
+18. _Tcl_  
+19. _OpenSSL_  
+20. _Scala_  
+21. _CQL-shell_  
+22. _MongoDB-Client_  
+23. _Groovy_  
+24. _R_  
+25. _Erlang_  
+26. _Clojure_  
+27. _Racket_  
+28. _Guile_  
+29. _Julia_  
+30. _PowerShell_  
+31. _GCC_  
+32. _Clang_  
+33. _Elixir_  
+34. _Java-JDK_  
+35. _Rust_  
+36. _Go_  
+37. _Dart_  
+38. _D_  
+39. _Nim_  
+40. _OCaml_  
+41. _.NET_  
 
 ---
 
@@ -211,11 +211,11 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ### Considered but not added (methods): 
 
-> 1. GNAT(Ada) + GFortran -> It comes installed with GCC, and the GCC is runs better (performance).  
-> 2. Common Lisp + Haskell + Gforth -> Need to install some extra packages / libraries (not good for us).  
-> 3. Swift -> We have the Clang, and Swift depends on it, runs slower.  
-> 4. Kotlin -> We have the JAVA-JDK, and Kotlin depends on it, runs slower.  
-> 5. MySQL + PostgreSQL -> the client version is not fully supported for all OSes.  
+> 1. _GNAT(Ada) + GFortran_ -> It comes installed with GCC, and the GCC is runs better (performance).  
+> 2. _Common Lisp + Haskell + Gforth_ -> Need to install some extra packages / libraries (not good for us).  
+> 3. _Swift_ -> We have the Clang, and Swift depends on it, runs slower.  
+> 4. _Kotlin_ -> We have the JAVA-JDK, and Kotlin depends on it, runs slower.  
+> 5. _MySQL + PostgreSQL_ -> the client version is not fully supported for all OSes.  
 
 ---
 
