@@ -46,7 +46,7 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 >8. Custom methods and messages (easily editable from global values).  
 >9. Simple, user-friendly and easy to use.  
 
-<h4>Methods (health-check) tests-order:</h4>  
+<h4>Methods; health-check order:</h4>  
 
 1. _Netcat_  
 2. _Bash_  
@@ -166,11 +166,11 @@ Display info:
 
 <h4>Methods:</h4>
 
-- <h5>Mongo-shell: Will not be able to connect to '0.0.0.0' (connection will fail).</h5>  
+- <h5>_Mongo-shell_: Will not be able to connect to '0.0.0.0' (connection will fail).</h5>  
 
 <h4>Bugs:</h4>
 
-- No known bugs.
+- <h5>No known bugs</h5>.
 
 ---
 
