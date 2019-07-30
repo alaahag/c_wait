@@ -166,7 +166,7 @@ Display info:
 
 <h5>Methods:</h5>
 
-- _Mongo-shell_: will not be able to connect to '0.0.0.0' (connection will fail).  
+- **Mongo-shell**: will not be able to connect to '0.0.0.0' (connection will fail).  
 
 <h5>Bugs:</h5>
 
