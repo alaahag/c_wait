@@ -164,8 +164,13 @@ Display info:
 
 <h3>Known issues:</h3>  
 
-<h5>Method:</h5>
+<h5>Methods:</h5>
+
 - _Mongo-shell_: will not be able to connect to '0.0.0.0' (connection will fail).  
+
+<h5>Bugs:</h5>
+
+- no known bugs.
 
 ---
 
