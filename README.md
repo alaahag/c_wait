@@ -35,7 +35,7 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 ### Features:  
 
 - Optimized for Kubernetes and Docker images (including full support for the most popular OS-images: _Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage_ and _openSUSE_).  
-- In addition, support for: _BusyBox, Termux, macOS, RedHat, SUSELinux, ArchLinux, Mageia, GentooLinux, Endless, Solus, Guix, Slackware_ and other Linux distributions.  
+- In addition, support for: _BusyBox, Termux, macOS, RedHat, SUSELinux, ArchLinux, Mageia, GentooLinux, Endless, OpenBSD, FreeBSD, Solus, Guix, Slackware_ and other Linux distributions.  
 - Supporting over 41 health-check methods, to check for open-connections.  
 - Allow adding unlimited number of hosts.  
 - Allow connection-mode:  
