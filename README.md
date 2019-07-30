@@ -103,7 +103,7 @@ IS_QUIET_MODE="no"
 
 <h4>You can modify the default values (read the source-code comments).</h4>  
 
-<h4>./c_wait --help</h4>  
+<h5>./c_wait --help</h5>  
 
 ```
 [ 'c_wait' - ConnectionWait v1.3 ]
@@ -147,14 +147,13 @@ Display info:
 
 <h3>Known issues:</h3>  
 
-```
-* Mongo-shell: will not connect to all interfaces '0.0.0.0'.
-```
+- Mongo-shell: will not connect to all interfaces '0.0.0.0'.
 
 --------------------
 
 ### Example using Docker: 
-<h6>cat docker-compose.yml:</h6>  
+
+<h4>cat docker-compose.yml:</h4>  
 
 ```
 services:  
@@ -184,7 +183,7 @@ networks:
   shared:    
 ```
 
-<h6>cat entrypoint_django_run.sh</h6>  
+<h4>cat entrypoint_django_run.sh</h4>  
 
 ```
 ./c_wait.sh db:5432  
