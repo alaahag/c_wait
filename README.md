@@ -46,7 +46,7 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 >8. Custom methods and messages (easily editable from global values).  
 >9. Simple, user-friendly and easy to use.  
 
-- <h4>Methods (health-check) tests-order:</h4>  
+<h4>Methods (health-check) tests-order:</h4>  
 **Netcat**  
 **Bash**  
 **SSH**  
@@ -91,7 +91,9 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 --------------------
 
-### Default global values [with args]:  
+### Default global values  
+
+ <h4>[with args]:</h4> 
 
 ```
 HOSTS="8.8.8.8:53 db:3306"  
@@ -101,9 +103,23 @@ CONNECT_MODE="all"
 IS_QUIET_MODE="no"  
 ```
 
-<h4>You can modify the default values (read the source-code comments).</h4>  
+<h4>[without args]:</h4>
 
-<h5>./c_wait --help</h5>  
+```
+METHODS="nc bash ssh curl wget telnet gawk zsh ncat nmap socat python python3 node ruby perl php tclsh openssl scala cqlsh mongo groovy Rscript erl clojure racket guile julia pwsh gcc clang elixirc javac rustc go dart dmd nim ocaml dotnet"
+
+TIMEOUT="2"
+
+readonly INIT_MESSAGE="'c_wait' - Initializing ..."
+readonly CONNECT_MESSAGE="'c_wait' - Connection Succeed!"
+readonly FAIL_MESSAGE="'c_wait' - Connection Failed!"
+readonly DONE_MESSAGE="'c_wait' - Task Completed :)"
+readonly QUIT_MESSAGE="'c_wait' - Terminated!"
+```
+
+<h5>You can modify the default values (read the source-code comments).</h5>  
+
+<h6>./c_wait --help</h6>  
 
 ```
 [ 'c_wait' - ConnectionWait v1.3 ]
