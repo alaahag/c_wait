@@ -164,15 +164,15 @@ Display info:
     
 ---
 
-<h3>Issues:</h3>  
+<h3>Known 'Issues':</h3>  
 
-<h4>Methods:</h4>  
+<h5>Methods:</h5>  
 
 - <h5>Mongo-shell: Will not be able to connect to '0.0.0.0' (connection will fail).</h5>  
 
-<h4>Bugs:</h4>  
+<h5>Others:</h5>  
 
-- <h5>No known bugs.</h5>  
+- <h5>No support for Solaris.</h5>  
 
 ---
 
