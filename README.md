@@ -170,7 +170,7 @@ Display info:
 
 <h5>Bugs:</h5>
 
-- no known bugs.
+- No known bugs.
 
 ---
 
