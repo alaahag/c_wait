@@ -217,15 +217,15 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ---
 
-### Considered but not added (methods): 
+### Considered methods, but not added at this moment: 
 
 > 1. _GNAT(Ada)_: It comes installed with GCC, but the GCC runs better (performance).  
 > 2. _GFortran_: It comes installed with GCC, but the GCC runs better (performance).  
-> 3. _Common Lisp_: Need to install extra packages / libraries for sockets.  
-> 4. _Haskell_: Need to install extra packages / libraries for sockets.  
-> 5. _Gforth_: Need to install extra packages / libraries for sockets.  
-> 6. _Swift_: It depends on Clang, but runs slower.  
-> 7. _Kotlin_: It depends on JAVA-JDK, but runs slower.  
+> 3. _Common Lisp_: Need to install extra library for sockets.  
+> 4. _Haskell_: Need to install extra library for sockets.  
+> 5. _Gforth_: Need to install extra library for sockets.  
+> 6. _Swift_: It depends on Clang, but Swift runs slower (performance).  
+> 7. _Kotlin_: It depends on JAVA-JDK, but Kotlin runs slower (performance).  
 > 8. _MySQL_: The client version is not fully supported for all OSes.  
 > 9. _PostgreSQL_: The client version is not fully supported for all OSes.</h5>  
 
