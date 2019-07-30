@@ -48,8 +48,8 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 <h4>Methods (health-check) tests-order:</h4>  
 
-**Netcat**  
-**Bash**  
+1. Netcat  
+2. Bash  
 **SSH**  
 **cURL**  
 **Wget**  
