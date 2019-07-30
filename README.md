@@ -34,17 +34,17 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 ### Features:  
 
-1. Optimized for _Kubernetes_ and _Docker_ images (including full support for the most popular OS-images: _Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage_ and _openSUSE_).  
-2. In addition, support for: _BusyBox, Termux, macOS, RedHat, SUSELinux, ArchLinux, Mageia, GentooLinux, Endless, OpenBSD, FreeBSD, Solus, Guix, Slackware_ and other Linux distributions.  
-3. Supporting over 41 health-check methods, to check for open-connections.  
-4. Allow adding unlimited number of hosts.  
-5. Allow connection-mode:  
+>1. Optimized for _Kubernetes_ and _Docker_ images (including full support for the most popular OS-images: _Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage_ and _openSUSE_).  
+>2. In addition, support for: _BusyBox, Termux, macOS, RedHat, SUSELinux, ArchLinux, Mageia, GentooLinux, Endless, OpenBSD, FreeBSD, Solus, Guix, Slackware_ and other Linux distributions.  
+>3. Supporting over 41 health-check methods, to check for open-connections.  
+>4. Allow adding unlimited number of hosts.  
+>5. Allow connection-mode:  
   @ 'all' hosts must be connected to complete the task.  
   @ 'any' of the hosts must be connected to complete the task.  
-6. Allow limited/forever connection-retries.  
-7. Option to display the installed and supported methods on host machine.  
-8. Custom methods and messages (easily editable from global values).  
-9. Simple, user-friendly and easy to use.  
+>6. Allow limited/forever connection-retries.  
+.7. Option to display the installed and supported methods on host machine.  
+.8. Custom methods and messages (easily editable from global values).  
+.9. Simple, user-friendly and easy to use.  
 
 * Methods (health-check) tests-order:  
 **Netcat**  
