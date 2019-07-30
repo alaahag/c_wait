@@ -9,7 +9,7 @@ When the task is complete: It will exit successfully (or else it will exit with 
 ### Examples, Where can I use this script?  
 - <h5>DevOps and automations: You have installed some X servers + DBs using Docker, But you don't want to let the servers run before DB-connections up (or else: the server will fail on initialization).</h5>  
 - <h5>PenetrationTesting: You have logged into a foreign system, And you want to "scan the area" with the current installed methods in that machine (to make no suspicious noise there).</h5>  
-- <h5>More PT: View the installed methods in X machine to get a clean vision of what could Hackers do inside your system (if they can compile or evaluate scripts using the existing methods, Then they can do some dangerous stuff there).</h5>
+- <h5>More PT: View the installed methods in X machine to get a clean vision of what could Hackers do inside your system (if they can compile or evaluate scripts using the existing methods, Then they can create a wide range of harmful scripts there).</h5>  
 
 ---
 
