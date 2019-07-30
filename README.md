@@ -46,7 +46,7 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 >8. Custom methods and messages (easily editable from global values).  
 >9. Simple, user-friendly and easy to use.  
 
-<h4>Methods (health-check) tests-order:</h4>  
+Methods (health-check) tests-order:  
 **Netcat**  
 **Bash**  
 **SSH**  
@@ -169,7 +169,7 @@ Display info:
 
 ### Example using Docker: 
 
-<h4>cat docker-compose.yml:</h4>  
+<h6>cat docker-compose.yml:</h6>  
 
 ```
 services:  
@@ -199,7 +199,7 @@ networks:
   shared:    
 ```
 
-<h4>cat entrypoint_django_run.sh</h4>  
+<h6>cat entrypoint_django_run.sh</h6>  
 
 ```
 ./c_wait.sh db:5432  
