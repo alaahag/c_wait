@@ -92,9 +92,9 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 ---
 
-### Default global values  
+### Default global values:  
 
- <h4>[with args]:</h4> 
+ <h4>With args:</h4> 
 
 ```
 HOSTS="8.8.8.8:53 db:3306"  
@@ -104,7 +104,7 @@ CONNECT_MODE="all"
 IS_QUIET_MODE="no"  
 ```
 
-<h4>[without args]:</h4>
+<h4>Without args:</h4>
 
 ```
 METHODS="nc bash ssh curl wget telnet gawk zsh ncat nmap socat python python3 node ruby perl php tclsh openssl scala cqlsh mongo groovy Rscript erl clojure racket guile julia pwsh gcc clang elixirc javac rustc go dart dmd nim ocaml dotnet"
@@ -164,13 +164,13 @@ Display info:
 
 <h3>Issues:</h3>  
 
-<h4>Methods:</h4>
+<h4>Methods:</h4>  
 
 - <h5>_Mongo-shell_: Will not be able to connect to '0.0.0.0' (connection will fail).</h5>  
 
-<h4>Bugs:</h4>
+<h4>Bugs:</h4>  
 
-- <h5>No known bugs</h5>.
+- <h5>No known bugs.</h5>  
 
 ---
 
