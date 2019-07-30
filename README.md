@@ -13,8 +13,8 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 <h4>Changelog v1.3:</h4>  
 
-- Added more testing-methods (_CQL-shell, Racket, Guile, Julia, Ocaml_).  
-- Fixed bugs.  
+>- Added more testing-methods (_CQL-shell, Racket, Guile, Julia, Ocaml_).  
+>- Fixed bugs.  
 - Optimized methods.  
 - Optimized code.  
 - Typo and usage.  
