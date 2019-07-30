@@ -219,11 +219,15 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ### Considered but not added (methods): 
 
-> 1. <h5>GNAT(Ada) + GFortran -> It comes installed with GCC, and the GCC is runs better (performance).</h5>  
-> 2. <h5>Common Lisp + Haskell + Gforth -> Need to install some extra packages / libraries (not good for us).</h5>  
-> 3. <h5>Swift -> We have the Clang, and Swift depends on it, runs slower.</h5>  
-> 4. <h5>Kotlin -> We have the JAVA-JDK, and Kotlin depends on it, runs slower.</h5>  
-> 5. <h5>MySQL + PostgreSQL -> the client version is not fully supported for all OSes.</h5>  
+> 1. <h5>GNAT(Ada): It comes installed with GCC, but the GCC runs better (performance).</h5>  
+> 2. GFortran: It comes installed with GCC, but the GCC runs better (performance).</h5>  
+> 3. <h5>Common Lisp: Need to install extra packages / libraries for sockets.</h5>  
+> 4. <h5>Haskell: Need to install extra packages / libraries for sockets.</h5>  
+> 5. <h5>Gforth: Need to install extra packages / libraries for sockets.</h5>  
+> 6. <h5>Swift -> It depends on Clang, but runs slower.</h5>  
+> 7. <h5>Kotlin -> It depends on JAVA-JDK, but runs slower.</h5>  
+> 8. <h5>MySQL: The client version is not fully supported for all OSes.</h5>  
+> 9. <h5>PostgreSQL: The client version is not fully supported for all OSes.</h5>  
 
 ---
 
