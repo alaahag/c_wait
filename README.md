@@ -22,8 +22,8 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 <h4>Changelog v1.2:</h4>  
 
-- Added a new option to display all supported and installed methods: [ ./c_wait.sh --installed ].  
-- Full support for the latest _> BusyBox_ version of _Telnet_ and _Wget_.  
+> Added a new option to display all supported and installed methods: [ ./c_wait.sh --installed ].  
+- Full support for the latest _BusyBox_ version of _Telnet_ and _Wget_.  
 - Added more testing-methods (_SSH, MongoDB-Client, Groovy, Zsh, Ocaml_).  
 - Fixed bugs.  
 - Optimized methods and performance.  
