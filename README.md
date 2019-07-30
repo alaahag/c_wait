@@ -48,8 +48,8 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 <h4>Methods (health-check) tests-order:</h4>  
 
-1. Netcat  
-2. Bash  
+1. _Netcat_  
+2. _Bash_  
 3. SSH  
 4. cURL  
 5. Wget  
@@ -209,7 +209,7 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ---
 
-### Considered but not added: 
+### Considered but not added (methods): 
 
 > 1. GNAT(Ada) + GFortran -> It comes installed with GCC, and the GCC is runs better (performance).  
 > 2. Common Lisp + Haskell + Gforth -> Need to install some extra packages / libraries (not good for us).  
