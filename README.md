@@ -164,7 +164,7 @@ Display info:
 
 <h3>Known issues:</h3>  
 
-- Mongo-shell: will not connect to '0.0.0.0'.  
+- _Mongo-shell_ method: will not connect to '0.0.0.0'.  
 
 ---
 
