@@ -50,45 +50,45 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 1. Netcat  
 2. Bash  
-**SSH**  
-**cURL**  
-**Wget**  
-**Telnet**  
-**Gawk**  
-**Zsh**  
-**Ncat**  
-**Nmap** 
-**Socat**  
-**Python**  
-**Python3**  
-**NodeJS**  
-**Ruby**  
-**Perl**  
-**PHP**  
-**Tcl**  
-**OpenSSL**  
-**Scala**  
-**CQL-shell**  
-**MongoDB-Client**  
-**Groovy**  
-**R**  
-**Erlang**  
-**Clojure**  
-**Racket**  
-**Guile**  
-**Julia**  
-**PowerShell**  
-**GCC**  
-**Clang**  
-**Elixir**  
-**Java-JDK**  
-**Rust**  
-**Go**  
-**Dart**  
-**D**  
-**Nim**  
-**OCaml**  
-**.NET**  
+3. SSH  
+4. cURL  
+5. Wget  
+6. Telnet  
+7. Gawk  
+8. Zsh  
+9. Ncat  
+10. Nmap  
+11. Socat  
+12. Python  
+13. Python3  
+14. NodeJS  
+15. Ruby  
+16. Perl  
+17. PHP  
+18. Tcl  
+19. OpenSSL  
+20. Scala  
+21. CQL-shell  
+22. MongoDB-Client  
+23. Groovy  
+24. R  
+25. Erlang  
+26. Clojure  
+27. Racket  
+28. Guile  
+29. Julia  
+30. PowerShell  
+31. GCC  
+32. Clang  
+33. Elixir  
+34. Java-JDK  
+35. Rust  
+36. Go  
+37. Dart  
+38. D  
+39. Nim  
+40. OCaml  
+41. .NET  
 
 --------------------
 
