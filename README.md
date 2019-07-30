@@ -9,7 +9,7 @@ When the task is complete: the script will exit successfully (or else it will ex
 ### Where can I use this script?  
 When you wanna initialize a server + DB (using Kubernetes or Docker for example), but you don't wanna let the server run before DB-connection (or else: the server will fail on initialization).  
 
---
+---
 
 <h4>Changelog v1.3:</h4>  
 
