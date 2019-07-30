@@ -11,7 +11,7 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 
 --------------------
 
-### Changelog v1.3:  
+<h4>Changelog v1.3:</h4>  
 - Added more testing-methods (_CQL-shell, Racket, Guile, Julia, Ocaml_).  
 - Fixed bugs.  
 - Optimized methods.  
@@ -19,7 +19,7 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 - Typo and usage.  
 - More validations.  
 
-### Changelog v1.2:  
+<h4>Changelog v1.2:</h4>  
 
 - Added a new option to display all supported and installed methods: [ ./c_wait.sh --installed ].  
 - Support for latest _BusyBox_ version of _Telnet_ and _Wget_.  
