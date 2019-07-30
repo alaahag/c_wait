@@ -30,7 +30,7 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 - Optimzed code.  
 - Deleted _GNAT(Ada)_ method (not needed because it comes with _GCC_, and the _GCC_ runs faster).  
 
---------------------
+---
 
 ### Features:  
 
@@ -90,7 +90,7 @@ When you wanna initialize a server + DB (using Kubernetes or Docker for example)
 40. OCaml  
 41. .NET  
 
---------------------
+---
 
 ### Default global values  
 
@@ -160,13 +160,13 @@ Display info:
      (display this usage)
 ```
     
---------------------
+---
 
 <h3>Known issues:</h3>  
 
 - Mongo-shell: will not connect to '0.0.0.0'.  
 
---------------------
+---
 
 ### Example using Docker: 
 
@@ -207,7 +207,7 @@ networks:
 python3 manage.py runserver 0.0.0.0:8000  
 ```
 
---------------------
+---
 
 ### Considered but not added: 
 
@@ -217,7 +217,7 @@ python3 manage.py runserver 0.0.0.0:8000
 > 4. Kotlin -> We have the JAVA-JDK, and Kotlin depends on it, runs slower.  
 > 5. MySQL + PostgreSQL -> the client version is not fully supported for all OSes.  
 
---------------------
+---
 
 Contact me for any ideas, help and support: alaahag@gmail.com , +972527337763  
 <h5>[PT & DevOPS developer, Looking for my next challenge].</h5>
