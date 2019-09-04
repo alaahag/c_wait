@@ -3,34 +3,38 @@
 ### Intro:  
 
 **'c_wait'** is a PenetrationTesting and DevOps tool **[an advanced health-check tool]**.  
-The script will keep checking for open-connections for hosts/ports [args].  
-When the task is complete: It will exit successfully (or else it will exit with failure).  
+The script checks for open-connections (using user-input hosts/ports [args]).  
+When the task is complete: It will exit successfully (or with failure).  
 
 ### Examples, Where can I use this script?  
-- <h5>DevOps and automations: You have installed some X servers + DBs using Docker or Kubernetes, But you don't want to let the servers run before DB-connections up (or else: the server will fail on initialization).</h5>  
-- <h5>PenetrationTesting: You have logged into a foreign system, And you want to "scan the area" with the current installed methods in that machine (to make no suspicious noise there).</h5>  
-- <h5>More PT: View the installed methods in X machine to get a clean vision of what could Hackers do inside your system (if they can compile or evaluate scripts using the existing methods, Then they can create a wide range of harmful scripts there).</h5>  
+- <h5>DevOps and automations: Health-check for databases before initializing the servers.</h5>  
+- <h5>PenetrationTesting: Display current installed health-check methods inside X machine.</h5>  
 
 ---
 
+<h4>Changelog v1.4</h4>  
+- Added more health-check methods (_Crystal_, _Picolisp_, _G++_, _Clang++_, _GNAT(Ada)_, _Haskell_, _Swift_, _Kotlin_, _Prolog(SWI)_, _Neko_, _FreePascal_).  
+- Added an option to save output to a log file.
+- Fixed small bugs and optimized health-check methods.  
+- Typo.  
+
 <h4>Changelog v1.3:</h4>  
 
-- Added more testing-methods (_CQL-shell, Racket, Guile, Julia_).  
+- Added more health-check methods (_CQL-shell, Racket, Guile, Julia_).  
 - Fixed bugs.  
 - Optimized methods.  
 - Optimized code.  
-- Typo and usage.  
+- Typo.  
 - More validations.  
 
 <h4>Changelog v1.2:</h4>  
 
 - Added a new option to display all supported and installed methods: [ ./c_wait.sh --installed ].  
 - Full support for the latest _BusyBox_ version of _Telnet_ and _Wget_.  
-- Added more testing-methods (_SSH, MongoDB-Client, Groovy, Zsh, Ocaml_).  
+- Added more health-check methods (_SSH, MongoDB-Client, Groovy, Zsh, Ocaml_).  
 - Fixed bugs.  
 - Optimized methods and performance.  
 - Optimzed code.  
-- Deleted _GNAT(Ada)_ method (not needed because it comes with _GCC_, and the _GCC_ runs faster).  
 
 ---
 
@@ -38,7 +42,7 @@ When the task is complete: It will exit successfully (or else it will exit with 
 
 >1. Optimized for _Kubernetes_ and _Docker_ images (including full support for the most popular OS-images: _Alpine, Ubuntu, CentOS, Fedora, Debian, AmazonLinux, OracleLinux, ROS, CirrOS, Mageia, ClearLinux, SourceMage_ and _openSUSE_).  
 >2. In addition, support for: _BusyBox, Termux, macOS, RedHat, SUSELinux, ArchLinux, Mageia, GentooLinux, Endless, OpenBSD, FreeBSD, Solus, Guix, Slackware_ and other Linux distributions.  
->3. Supporting over 41 health-check methods, to check for open-connections.  
+>3. Supporting over 53 health-check methods, to check for open-connections.  
 >4. Allow adding unlimited number of hosts.  
 >5. Allow connection-mode:  
   @ 'all' hosts must be connected to complete the task.  
@@ -70,27 +74,39 @@ When the task is complete: It will exit successfully (or else it will exit with 
 18. _Tcl_  
 19. _OpenSSL_  
 20. _Scala_  
-21. _CQL-shell_  
-22. _MongoDB-Client_  
-23. _Groovy_  
-24. _R_  
-25. _Erlang_  
-26. _Clojure_  
-27. _Racket_  
-28. _Guile_  
-29. _Julia_  
-30. _PowerShell_  
-31. _GCC_  
-32. _Clang_  
-33. _Elixir_  
-34. _Java-JDK_  
-35. _Rust_  
-36. _Go_  
-37. _Dart_  
-38. _D_  
-39. _Nim_  
-40. _OCaml_  
-41. _.NET_  
+21. _Crystal_  
+22. _CQL-shell_  
+23. _Mongo-shell_  
+24. _Groovy_  
+25. _R_  
+26. _Elixir_  
+27. _Erlang_  
+28. _Clojure_  
+29. _Racket_  
+30. _Guile_  
+31. _PicoLisp_  
+32. _PowerShell_  
+33. _Julia_  
+34. _GCC_  
+35. _G++_  
+36. _Clang_  
+37. _Clang++_  
+38. _GNAT(Ada)_  
+39. _Java-JDK_  
+40. _Haskell_  
+41. _Rust_  
+42. _Go_  
+43. _SBCL_  
+44. _Dart_  
+45. _D_  
+46. _Nim_  
+47. _OCaml_  
+48. _Swift_  
+49. _Kotlin_  
+50. _.NET_  
+51. _Prolog(SWI)_  
+52. _Neko_  
+53. _FreePascal_  
 
 ---
 
@@ -104,12 +120,13 @@ SLEEP_TIME="3"
 RETRIES_COUNT="0"  
 CONNECT_MODE="all"  
 IS_QUIET_MODE="no"  
+LOG_FILE="-"  
 ```
 
 <h4>Without args:</h4>
 
 ```
-METHODS="nc bash ssh curl wget telnet gawk zsh ncat nmap socat python python3 node ruby perl php tclsh openssl scala cqlsh mongo groovy Rscript erl clojure racket guile julia pwsh gcc clang elixirc javac rustc go dart dmd nim ocaml dotnet"
+METHODS="nc bash ssh curl wget telnet gawk zsh ncat nmap socat python python3 node ruby perl php tclsh openssl scala crystal cqlsh mongo groovy Rscript elixir erl clojure racket guile pil pwsh julia gcc g++ clang clang++ gnatmake javac ghc rustc go sbcl dart dmd nim ocamlc swiftc kotlinc dotnet swipl nekoc fpc"
 
 TIMEOUT="2"
 
@@ -125,31 +142,40 @@ readonly QUIT_MESSAGE="'c_wait' - Terminated!"
 <h6>./c_wait --help</h6>  
 
 ```
-[ 'c_wait' - ConnectionWait v1.3 ]
+[ 'c_wait' - ConnectionWait v1.4 ]
 
 Usage:
-  ./c_wait.sh --connect <'all'/'any'>
-     --sleep <secs> --retry <num/'forever'>
-     <hosts:ports ...>
+  ./c_wait.sh --connect {all|any}
+     --sleep <secs> --retry <num|'forever'>
+     --log <file|'-'> <hosts:ports ...>
+
+Short usage:
+  ./c_wait.sh -c {all|any} -r <num|'0'>
+     -s <secs> -l <file|'-'> <hosts ...>
 
 Examples:
-  ./c_wait.sh --sleep 4 ftp:21 192.168.1.1:22
+  ./c_wait.sh -l out.txt
+  ./c_wait.sh --sleep 1 google.com 8.8.8.8:53
+  ./c_wait.sh -s 4 ftp:21 192.168.1.1:22
   ./c_wait.sh --quiet -s 10 -r 3 myserver:8000
-  ./c_wait.sh -c any -q localhost myftp:21
-  ./c_wait.sh --connect all --retry 4 tln:25
+  ./c_wait.sh -c any --log - localhost myftp:21
+  ./c_wait.sh --connect all -q --retry 4 tln:25
 
 Options and default values:
   <hosts:ports ...>
      ('8.8.8.8:53 db:3306')
 
-  -c | --connect <'all'/'any'>
+  -c | --connect {all|any}
      ('all' of the selected hosts)
 
   -s | --sleep <seconds>
      ('3' seconds)
 
-  -r | --retry <number/'forever'>
+  -r | --retry <number|'forever'>
      (connection-retries: 'forever')
+
+  -l | --log <file|'-'>
+     (log file: '')
 
   -q | --quiet
      (minimal output? 'no')
@@ -172,7 +198,7 @@ Display info:
 
 <h5>Others:</h5>  
 
-- <h5>No support for Solaris.</h5>  
+- <h5>No support for Solaris (because of incompatible version of 'grep').</h5>  
 
 ---
 
@@ -217,17 +243,11 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ---
 
-### Considered methods, but not added at this moment: 
+### TODO: 
 
-> 1. _GNAT(Ada)_: It comes installed with GCC, but the GCC runs better (performance).  
-> 2. _GFortran_: It comes installed with GCC, but the GCC runs better (performance).  
-> 3. _Common Lisp_: Need to install extra library for sockets.  
-> 4. _Haskell_: Need to install extra library for sockets.  
-> 5. _Gforth_: Need to install extra library for sockets.  
-> 6. _Swift_: It depends on Clang, but Swift runs slower (performance).  
-> 7. _Kotlin_: It depends on JAVA-JDK, but Kotlin runs slower (performance).  
-> 8. _MySQL_: The client version is not fully supported for all OSes.  
-> 9. _PostgreSQL_: The client version is not fully supported for all OSes.</h5>  
+> 1. _GAS(GNU Assembler)_.  
+> 2. _GFortran_.  
+> 3. _Gforth_.  
 
 ---
 
