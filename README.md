@@ -199,7 +199,7 @@ Display info:
 
 <h5>Others:</h5>  
 
-- <h5>No support for Solaris (incompatible version of 'grep').</h5>  
+- <h5>No support for Solaris OS (incompatible version of 'grep').</h5>  
 
 ---
 
