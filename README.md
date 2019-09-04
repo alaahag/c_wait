@@ -248,7 +248,7 @@ python3 manage.py runserver 0.0.0.0:8000
 
 > 1. _GAS(GNU Assembler)_.  
 > 2. _GFortran_.  
-> 3. _Gforth_.  
+> 3. _GForth_.  
 
 ---
 
