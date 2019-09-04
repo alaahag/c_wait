@@ -246,9 +246,9 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ### TODO: 
 
-> 1. _GAS(GNU Assembler)_.  
-> 2. _GFortran_.  
-> 3. _GForth_.  
+> 1. Add a health-check method for _GAS(GNU Assembler)_.  
+> 2. Add a health-check method for _GFortran_.  
+> 3. Add a health-check method for _GForth_.  
 
 ---
 
