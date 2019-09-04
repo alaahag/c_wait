@@ -13,6 +13,7 @@ When the task is complete: It will exit successfully (or with failure).
 ---
 
 <h4>Changelog v1.4</h4>  
+
 - Added more health-check methods (_Crystal_, _Picolisp_, _G++_, _Clang++_, _GNAT(Ada)_, _Haskell_, _Swift_, _Kotlin_, _Prolog(SWI)_, _Neko_, _FreePascal_).  
 - Added an option to save output to a log file.  
 - Fixed small bugs and optimized health-check methods.  
