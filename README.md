@@ -4,7 +4,7 @@
 
 **'c_wait'** is a PenetrationTesting and DevOps tool **[an advanced health-check tool]**.  
 The script checks for open-connections (using user-input [args]).  
-And wwen the task is complete: The script will exit successfully (or with failure).  
+And when the task is complete: The script will exit successfully (or with failure).  
 
 ### Examples, Where can I use this script?  
 - <h5>DevOps and automations: Health-check for databases before initializing the servers.</h5>  
