@@ -1,4 +1,4 @@
-## 'c_wait' - ConnectionWait v1.3
+## 'c_wait' - ConnectionWait v1.4
 
 ### Intro:  
 
