@@ -244,13 +244,5 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ---
 
-### TODO: 
-
-> 1. Add a health-check method for _GAS(GNU Assembler)_.  
-> 2. Add a health-check method for _GFortran_.  
-> 3. Add a health-check method for _GForth_.  
-
----
-
-Contact me for any ideas, help and support: alaahag@gmail.com , +972527337763  
+alaahag@gmail.com , +972527337763  
 <h5>[PT & DevOPS developer, Looking for my next challenge].</h5>
