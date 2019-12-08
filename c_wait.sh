@@ -503,7 +503,7 @@ Method_On_Action()
         "fpc")
             local package="$exec_package.pp"
             if [ ! -s "$exec_package" ]; then echo "Uses sockets,netdb,unixtype,SysUtils;Var sa:sockaddr_in;s:Longint;tv:timeval;h:THostEntry;hs:String;Begin s:=fpSocket(AF_INET,SOCK_STREAM,0);sa.sin_family:=AF_INET;sa.sin_port:=htons(StrToInt(ParamStr(2)));tv.tv_sec:=StrToInt(ParamStr(3));hs:=ParamStr(1);if not(ResolveHostByAddr(StrToHostAddr(hs),h)) and not(ResolveHostByName(hs,h)) then halt(2);if(h.Addr.s_addr=0) then halt(2);sa.sin_addr.s_addr:=h.Addr.s_addr;if(fpsetsockopt(s,SOL_SOCKET,SO_SNDTIMEO,@tv,sizeof(tv))<>0) or (fpconnect(s,@sa,Sizeof(sa))<0) then halt(2);CloseSocket(s);End." > "$package" && "$method" -O3 "$package" >/dev/null 2>&1; fi
-            ./"$exec_package" "$host" "$port" "$TIMEOUT" >/dev/null 2>&1;
+            ./"$exec_package" "$host" "$port" "$TIMEOUT" >/dev/null 2>&1
             ;;
 
         *)
